@@ -1,0 +1,22 @@
+create table tasks (
+task_id	serial	primary key,
+task_name	text	not null,
+task_status	text	not null,
+task_detail	text not null,
+task_no Integer	not null,
+priority	text	not null,
+progress	Integer,
+tag	text,
+created_at	Timestamp	not null,
+creator_id	Integer,
+engineer_id	Integer,
+project_id	Integer,
+updated_at	TimeStamp	not null,
+anticipated_commencement_date	Date	not null,
+expected_completion_date	Date	not null,
+finish_date	Date,
+completion_date	Date,
+completion_flg	Integer	not null,
+deleted_at	TimeStamp,
+deleted_flg	Integer	not null
+)
