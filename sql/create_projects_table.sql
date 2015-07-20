@@ -1,8 +1,8 @@
 create table projects (
 project_id	serial	primary key,
-project_name	text	not null,
+project_name	varchar(30)	not null,
 creator_id	Integer,
-creator_at	TimeStamp,
+created_at	TimeStamp not null,
 deleted_at	TimeStamp,
 deleted_flg	Integer	not null,
 completion_date	Date,
