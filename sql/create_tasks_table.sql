@@ -16,6 +16,6 @@ anticipated_commencement_date	Date	not null,
 expected_completion_date	Date	not null,
 finish_date	Date,
 completion_date	Date,
-completion_flg	Integer	not null,
-deleted_flg	Integer	not null
+completion_flg	boolean	not null,
+deleted_flg	boolean	not null
 )
