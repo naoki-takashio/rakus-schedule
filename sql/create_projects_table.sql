@@ -5,6 +5,7 @@ creator_id	integer,
 commencement_date date,
 completion_date	date,
 completion_flg	boolean	not null,
-updated_at	timestamp(3) not null,
+created_at	timestamp(3)	not null,
+updated_at	timestamp(3)	not null,
 deleted_flg	boolean	not null
 )
