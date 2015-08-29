@@ -19,7 +19,7 @@ public class Task {
 
 	private Integer taskId;	
 	private String taskName;
-	private String taskStatus;
+	private Integer taskStatus;
 	private String taskDetail;
 	private Integer taskNo;
 	/**
