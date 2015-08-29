@@ -19,26 +19,26 @@ public class TaskRepository {
 	
 	public static final RowMapper<Task> TASK_ROW_MAPPER = (rs, i) -> {
 		Task task = new Task();
-		task.setTask_id(rs.getInt("task_id"));
-		task.setTask_name(rs.getString("task_name"));
-		task.setTask_detail(rs.getString("task_status"));
-		task.setTask_no(rs.get("task_no"));
+		task.setTaskId(rs.getInt("task_id"));
+		task.setTaskName(rs.getString("task_name"));
+		task.setTaskDetail(rs.getString("task_status"));
+		task.setTaskNo(rs.getInt("task_no"));
 		task.setPriority(rs.getString("priority"));
 		task.setProgress(rs.getInt("progress"));
 		task.setTag(rs.getString("tag"));
-		task.setCreated_at(rs.getTimestamp("created_at"));
-		task.setCreator_id(rs.getInt("creator_id"));
-		task.setEngineer_id(rs.getString("engineer_id"));
-		task.setProject_id(rs.getInt("project_id"));
-		task.setUpdated_at(rs.getTimestamp("updated_at"));
-		task.setAnticipated_commencement_date(rs.getDate("anticipated_commencement_date"));
-		task.setExpected_completion_date(rs.getDate("expected_completion_date"));
-		task.setCommencement_date(rs.getDate("commencement_date"));
-		task.setFinish_date(rs.getDate("finish_date"));
-		task.setCompletion_date(rs.getDate("completion_date"));
-		task.setCompletion_flg(rs.getInt("completion_flg"));
-		task.setDeleted_flg(rs.getInt("deleted_flg"));
-		task.setDeleted_at(rs.getTimestamp("deleted_at"));
+		task.setCreatedAt(rs.getTimestamp("created_at"));
+		task.setCreatorId(rs.getInt("creator_id"));
+		task.setEngineerId(rs.getString("engineer_id"));
+		task.setProjectId(rs.getInt("project_id"));
+		task.setUpdatedAt(rs.getTimestamp("updated_at"));
+		task.setAnticipatedCommencementDate(rs.getDate("anticipatedCommencement_date"));
+		task.setExpectedVompletion_date(rs.getDate("expected_completion_date"));
+		task.setCommencementDate(rs.getDate("commencement_date"));
+		task.setFinishDate(rs.getDate("finish_date"));
+		task.setCompletionDate(rs.getDate("completion_date"));
+		task.setCompletionFlg(rs.getBoolean("completion_flg"));
+		task.setDeletedFlg(rs.getBoolean("deleted_flg"));
+		task.setDeletedAt(rs.getTimestamp("deleted_at"));
 			return task;
 		};
 	
@@ -95,7 +95,7 @@ public class TaskRepository {
 	public String update(Task task){
 //		String taskStatusUpdateSql = "update tasks set task_status = :taskStatus where id = :id";
 //		String completionFlgUpdateSql = "update tasks set task_status = :taskStatus ,completion_flg = :completionFlg where id = :id";
-		String deleteFlgUpdateSql = "update tasks set deleted_flg = :deleteFlg where id = :id";
+		String deleteFlgUpdateSql = "UPDATE tasks SET deleted_flg = :deleteFlg where id = :id";
 		SqlParameterSource param = new MapSqlParameterSource()
 				.addValue("id", task.getTask_id()).addValue("status", task.getTask_status());
 		jdbcTemplate.update(sql, param);	
