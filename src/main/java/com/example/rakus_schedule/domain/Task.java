@@ -2,6 +2,7 @@ package com.example.rakus_schedule.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,7 +45,7 @@ public class Task {
 	/**
 	 * 担当者ID
 	 */
-	private String engineerId;
+	private Integer engineerId;
 	/**
 	 * プロジェクトID
 	 */
@@ -85,5 +86,8 @@ public class Task {
 	 * 削除日時
 	 */
 	private Timestamp deletedAt;
-
+	/**
+	 * コメント
+	 */
+	private List<String> comment;
 }
