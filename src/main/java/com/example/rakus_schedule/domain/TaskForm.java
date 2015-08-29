@@ -1,22 +1,18 @@
 package com.example.rakus_schedule.domain;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
+	import java.sql.Date;
+	import java.sql.Timestamp;
+	import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+	import lombok.AllArgsConstructor;
+	import lombok.Data;
+	import lombok.NoArgsConstructor;
 
-/**
- * @author ttanaka
- * タスクのドメイン
- */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Task {
-
+@AllArgsConstructor
+public class TaskForm {
+	
 	private Integer taskId;	
 	private String taskName;
 	private String taskStatus;
@@ -73,7 +69,7 @@ public class Task {
 	/**
 	 * 完了日
 	 */
-	private Date completionDate;
+	private boolean completionDate;
 	/**
 	 * 完了フラグ
 	 */
@@ -90,4 +86,5 @@ public class Task {
 	 * コメント
 	 */
 	private List<String> comment;
+
 }

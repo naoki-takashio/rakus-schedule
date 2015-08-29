@@ -1,4 +1,5 @@
-package com.example.rakus_schedule.domain;
+package com.example.rakus_schedule.web;
+
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -8,14 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author ttanaka
- * タスクのドメイン
- */
+	/**
+	 * @author ttanaka
+	 * タスクのフォーム
+	 */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Task {
+public class TaskForm {
 
 	private Integer taskId;	
 	private String taskName;
@@ -77,11 +78,11 @@ public class Task {
 	/**
 	 * 完了フラグ
 	 */
-	private Integer completionFlg;
+	private boolean completionFlg;
 	/**
 	 * 削除フラグ
 	 */
-	private Integer deletedFlg;
+	private boolean deletedFlg;
 	/**
 	 * 削除日時
 	 */
