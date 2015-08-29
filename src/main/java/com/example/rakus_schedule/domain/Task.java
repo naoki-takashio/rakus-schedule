@@ -77,11 +77,11 @@ public class Task {
 	/**
 	 * 完了フラグ
 	 */
-	private Integer completionFlg;
+	private boolean completionFlg;
 	/**
 	 * 削除フラグ
 	 */
-	private Integer deletedFlg;
+	private boolean deletedFlg;
 	/**
 	 * 削除日時
 	 */
