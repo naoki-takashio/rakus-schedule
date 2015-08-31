@@ -19,7 +19,7 @@
 <link href='http://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<h1>Tasks</h1>
+	<h1>Tasks-task</h1>
 	<div>
 		<c:forEach var="status" items="${statusList}">
 			<div>
