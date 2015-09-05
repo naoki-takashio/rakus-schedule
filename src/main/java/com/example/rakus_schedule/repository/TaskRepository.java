@@ -22,7 +22,7 @@ public class TaskRepository {
 		task.setTaskId(rs.getInt("task_id"));
 		task.setTaskName(rs.getString("task_name"));
 		task.setTaskStatus(rs.getInt("task_status"));
-		task.setTaskNo(rs.getInt("task_no"));
+		task.setOrderNo(rs.getInt("order_no"));
 		task.setPriority(rs.getString("priority"));
 		task.setProgress(rs.getInt("progress"));
 		task.setTag(rs.getString("tag"));

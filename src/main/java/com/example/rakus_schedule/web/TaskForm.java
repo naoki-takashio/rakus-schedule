@@ -22,7 +22,7 @@ public class TaskForm {
 	private String taskName;
 	private Integer taskStatus;
 	private String taskDetail;
-	private Integer taskNo;
+	private Integer orderNo;
 	/**
 	 * 優先度
 	 */
