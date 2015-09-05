@@ -75,7 +75,7 @@ public class TaskRepository {
 				+ " progress, tag, created_at, creator_id, engineer_id, project_id, updated_at, "
 				+ "anticipated_commencement_date, expected_completion_date, commencement_date, "
 				+ "finish_date, completion_date, completion_flg, deleted_flg, deleted_at"
-				+ "FROM tasks ORDER BY id";
+				+ "FROM tasks ORDER BY order_no";
 		List<Task> taskList = jdbcTemplate.query(sql,TASK_ROW_MAPPER);
 		// if (adminUserList.size() == 0) {// 管理者が登録されてないとき
 		// return null;
@@ -101,7 +101,7 @@ public class TaskRepository {
 		jdbcTemplate.update(sql, param);	
 	
 		//Viewで削除された場合はdelete_flgを論理削除する	
-		if(task.getDeletedFlg() = 1){
+		if(task.getDeleteFlg() == true){
 			SqlParameterSource param = new MapSqlParameterSource()
 					.addValue("id", task.getTask_id()).addValue("deleteFlg", task.getDeletedFlg());
 			jdbcTemplate.update(sql, param);	
@@ -123,10 +123,5 @@ public class TaskRepository {
 					.addValue("id", task.getTask_id()).addValue("deleteFlg", task.getDeletedFlg());
 			jdbcTemplate.update(sql, param);
 			
-	}
-
-	
-	
-	
-	
+	}	
 }

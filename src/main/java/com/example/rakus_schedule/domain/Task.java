@@ -27,7 +27,7 @@ public class Task {
 	 */
 	private String priority;
 	/**
-	 * 進捗度
+	 * 進捗度（今回は0）
 	 */
 	private Integer progress;
 	/**

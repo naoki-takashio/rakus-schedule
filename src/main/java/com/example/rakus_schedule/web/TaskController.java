@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.repository.TaskRepository;
+import com.example.rakus_schedule.service.TaskService;
 
 @Controller
 @RequestMapping("/")
 public class TaskController {
 
 	@Autowired
-	private TaskRepository taskRepository;
+	private TaskService taskService;
 
 	@ModelAttribute
 	public TaskRegistrationForm setUpForm(){
@@ -33,10 +34,10 @@ public class TaskController {
 	 * @return
 	 */
 	@RequestMapping
-	public String index(Model model) {		
-		List<Task> taskList = taskRepository.findAll();
+	public String top(Model model) {		
+		List<Object> allTaskList = taskService.kanbanView();
 //		jsp側から参照する、スコープに格納する必要がある。
-		model.addAttribute("taskList",taskList);
+		model.addAttribute("allTaskList",allTaskList);
 		return "top";
 	}
 	
