@@ -8,6 +8,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 	/**
 	 * @author ttanaka
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class TaskForm {
 
 	private Integer taskId;	
+	@NonNull
 	private String taskName;
 	private Integer taskStatus;
 	private String taskDetail;
@@ -58,10 +60,12 @@ public class TaskForm {
 	/**
 	 * 開始予定日
 	 */
+	@NonNull
 	private Date anticipatedCommencementDate;
 	/**
 	 * 終了予定日
 	 */
+	@NonNull
 	private Date expectedCompletionDate;
 	/**
 	 * 開始日
