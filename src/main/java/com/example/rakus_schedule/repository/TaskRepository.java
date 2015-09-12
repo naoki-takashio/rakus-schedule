@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -21,6 +21,7 @@ public class TaskRepository {
 	@Autowired
 	private taskSqlUtil taskSqlUtil;
 	
+
 	public static final RowMapper<Task> TASK_ROW_MAPPER = (rs, i) -> {
 		Task task = new Task();
 		task.setTaskId(rs.getInt("task_id"));
@@ -35,6 +36,9 @@ public class TaskRepository {
 		task.setEngineerId(rs.getInt("engineer_id"));
 		task.setProjectId(rs.getInt("project_id"));
 		task.setAnticipatedCommencementDate(rs.getDate("anticipatedCommencement_date"));
+		task.setUpdatedAt(rs.getTimestamp("updated_at"));
+		task.setAnticipatedCommencementDate(rs
+				.getDate("anticipatedCommencement_date"));
 		task.setExpectedCompletionDate(rs.getDate("expected_completion_date"));
 		task.setCommecementDate(rs.getDate("commencement_date"));
 		task.setFinishDate(rs.getDate("finish_date"));
@@ -46,29 +50,6 @@ public class TaskRepository {
 			return task;
 		};
 	
-//	/**
-//	 * 新規タスクを作成された際、DBにその情報を登録するメソッド
-//	 * @param task
-//	 */
-//	public String save(Task task) {
-//		String sql = "INSERT INTO tasks ("
-//				+ "task_name ,task_status ,task_conten ,task_no"
-//				+ ",priority ,progress ,tag ,created_at ,reator_id"
-//				+ ",engineer_id ,project_id ,updated_at ,anticipated_commencement_date"
-//				+ ",expected_completion_date ,finish_date ,completion_date"
-//				+ ",completion_flg ,deleted_at ,deleted_flg) "
-//				+ "values (:name, :email, :password)";
-//		
-////		DBのカラムが何を表しているのか、
-////		どんな値が入るのかによって、SQL文とparamの値が変わってくる	
-//		SqlParameterSource param = new MapSqlParameterSource()
-//				.addValue("name", .getName())
-//				.addValue("email", adminUser.getEmail())
-//				.addValue("password", adminUser.getPassword());
-//		
-//		jdbcTemplate.update(sql, param);
-//		return null;
-//	}
 
 	/**
 	 * 全てのタスク情報をtasksテーブルから取得するメソッド
@@ -89,12 +70,37 @@ public class TaskRepository {
 		List<Task> allActiveTaskList = jdbcTemplate.query(allActiveTaskSql, TASK_ROW_MAPPER);
 		return allActiveTaskList;
 	}
-	
+
+
+	/**
+	 * 新規タスクを作成された際、DBにその情報を登録するメソッド.
+	 * 登録前にタスクの並び順を担保するため既に登録されているカラムのorder_noをupdateする.
+	 * @param task 新規登録するタスク
+	 */
+	public void updateOrderNoForStandByAndInsertTask(Task task) {
+
+		String sql1 = "update tasks set order_no = order_no + 1 where task_status = 1 ;";
+
+		//created_at,updated_at,completion_flg,deleted_flgはトリガー作ったら自動で登録出来るようにする。今は直書きで対応。
+		String sql2 = "insert into tasks ("
+				+ "task_name ,task_status ,order_no"
+				+ ",priority ,progress ,created_at"
+				+ ",updated_at ,anticipated_commencement_date"
+				+ ",expected_completion_date"
+				+ ",completion_flg ,deleted_flg) "
+				+ "values (:taskName, :taskStatus, :orderNo, :priority, :progress, systimestamp, systimestamp, :anticipatedCommencementDate, :expectedCompletionDate, 0, 0)";
+
+		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
+		jdbcTemplate.update(sql1, param);
+		jdbcTemplate.update(sql2, param);
+	}
+
+
+
 //	/**
-//	 * tasksテーブルのtask_statusを更新するメソッド
-//	 * 何がどう更新されたかが、サーバーサイドではわからない
-//	 * オブジェクトを取得し、全て更新というのが良い気がする
-//	 * flgとかは分かるけど。。。editの場合はわからない。
+//	 * tasksテーブルのtask_statusを更新するメソッド 何がどう更新されたかが、サーバーサイドではわからない
+//	 * オブジェクトを取得し、全て更新というのが良い気がする flgとかは分かるけど。。。editの場合はわからない。
+//	 * 
 //	 * @param task
 //	 * @return
 //	 */
@@ -108,6 +114,7 @@ public class TaskRepository {
 //	
 //		//Viewで削除された場合はdelete_flgを論理削除する	
 //		if(task.getDelet == true){
+//		if(task.getDeletedFlg() = 1){
 //			SqlParameterSource param = new MapSqlParameterSource()
 //					.addValue("id", task.getTask_id()).addValue("deleteFlg", task.getDeletedFlg());
 //			jdbcTemplate.update(sql, param);	
@@ -131,3 +138,4 @@ public class TaskRepository {
 //			
 //	}	
 }
+
