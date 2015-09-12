@@ -36,7 +36,11 @@ public class Task {
 	 */
 	private String taskContents;
 	
-	private Integer taskNo;
+	/**
+	 * 同タスク内の順番
+	 */
+	private Integer orderNo;
+	
 	/**
 	 * 優先度
 	 */

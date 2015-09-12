@@ -18,11 +18,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TaskForm {
 
-	private Integer taskId;	
+	/**
+	 * タスクID
+	 */
+	private Integer taskId;
+	
+	/**
+	 * タスク名
+	 */
 	private String taskName;
+	
+	/**
+	 * タスクステータス 
+	 */
 	private Integer taskStatus;
-	private String taskDetail;
-	private Integer taskNo;
+
+	/**
+	 * タスクコンテンツ
+	 */
+	private String taskContents;
+	
+	/**
+	 * 同タスク内の順番
+	 */
+	private Integer orderNo;
+	
 	/**
 	 * 優先度
 	 */
@@ -83,10 +103,7 @@ public class TaskForm {
 	 * 削除フラグ
 	 */
 	private boolean deletedFlg;
-	/**
-	 * 削除日時
-	 */
-	private Timestamp deletedAt;
+	
 	/**
 	 * コメント
 	 */
