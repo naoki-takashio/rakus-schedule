@@ -1,0 +1,120 @@
+body, * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html{
+  font-size: 62.5%;
+  height: 100%;
+  width: 100%;
+}
+body{
+  background: url(../img/bg.png);
+}
+header{
+  background: #FFF9E8;
+  display: table;
+  height: 50px;
+  width: 100%;
+}
+h1{
+  color: #FFAC1B;
+  display: table-cell;
+  font-size: 3rem;
+  padding: 0 0 0 15px;
+  text-shadow: 1px 2px 3px rgba(0,0,0,0.3);
+  vertical-align: middle;
+}
+article{
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 20px 0;
+  width: 100%;
+}
+.status{
+  background: #fff;
+  border: 2px solid #ddd;
+  float: left;
+  margin: 0 1%;
+  padding: 0 0 15px 0;
+  width: 23%;
+}
+.statusName{
+  background: #fff;
+  border-bottom: 2px solid #ddd;
+  font-size: 2.2rem;
+  font-weight: bold;
+  padding: 0 8px;
+  width: 100%;
+}
+.task{
+  background: #eee;
+  border: 2px solid #ddd;
+  font-size: 1.6rem;
+  height: 150px;
+  margin: 15px auto 0 auto;
+  position: relative;
+  width: 90%;
+}
+.taskNo{
+  background: #ddd;
+}
+.priority{
+  background: blue;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1.4rem;
+  position: absolute;
+  right: 28px;
+  text-align: center;
+  top: 1px;
+  width: 40px;
+}
+.btnEdit img{
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 26px;
+}
+.taskName{
+  background: #fff;
+  height: 80px;
+  left: 2%;
+  position: absolute;
+  top: 30px;
+  width: 70%;
+}
+.engineerId{
+  background: #fff;
+  height: 80px;
+  position: absolute;
+  right: 2%;
+  text-align: center;
+  top: 30px;
+  width: 24%;
+}
+.engineerId img{
+  margin: 5px 0 0 0;
+  width: 80%;
+}
+.engineerId p{
+  bottom: 0;
+  font-size: 1.4rem;
+  position: absolute;
+  width: 100%;
+}
+.anticipatedCommencementDate{
+  bottom: 5px;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  width: 50%;
+}
+.expectedCompletionDate{
+  bottom: 5px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: 50%;
+}
