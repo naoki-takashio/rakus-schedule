@@ -17,10 +17,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Task {
 
+	/**
+	 * タスクID
+	 */
 	private Integer taskId;	
+	/**
+	 * タスク名 
+	 */
 	private String taskName;
+	
+	/**
+	 * タスクステータス
+	 */
 	private Integer taskStatus;
-	private String taskDetail;
+
+	/**
+	 * タスクコンテンツ
+	 */
+	private String taskContents;
+	
 	private Integer taskNo;
 	/**
 	 * 優先度
@@ -34,6 +49,7 @@ public class Task {
 	 * タグ
 	 */
 	private String tag;
+
 	/**
 	 * 作成日時
 	 */
@@ -82,10 +98,7 @@ public class Task {
 	 * 削除フラグ
 	 */
 	private boolean deletedFlg;
-	/**
-	 * 削除日時
-	 */
-	private Timestamp deletedAt;
+	
 	/**
 	 * コメント
 	 */

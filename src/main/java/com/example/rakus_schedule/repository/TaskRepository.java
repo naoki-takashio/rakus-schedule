@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.rakus_schedule.domain.Task;
-import com.example.rakus_schedule.util.StringUtil;
+import com.example.rakus_schedule.util.taskSqlUtil;
 
 @Repository
 public class TaskRepository {
@@ -19,13 +19,14 @@ public class TaskRepository {
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
 	@Autowired
-	private StringUtil stringUtil;
+	private taskSqlUtil taskSqlUtil;
 	
 	public static final RowMapper<Task> TASK_ROW_MAPPER = (rs, i) -> {
 		Task task = new Task();
 		task.setTaskId(rs.getInt("task_id"));
 		task.setTaskName(rs.getString("task_name"));
-		task.setTaskStatus(rs.getInt("task_content"));
+		task.setTaskStatus(rs.getInt("task_status"));
+		task.setTaskContents(rs.getString("task_contents"));
 		task.setTaskNo(rs.getInt("order_no"));
 		task.setPriority(rs.getString("priority"));
 		task.setProgress(rs.getInt("progress"));
@@ -42,7 +43,6 @@ public class TaskRepository {
 		task.setCreatedAt(rs.getTimestamp("created_at"));
 		task.setUpdatedAt(rs.getTimestamp("updated_at"));
 		task.setDeletedFlg(rs.getBoolean("deleted_flg"));
-		task.setDeletedAt(rs.getTimestamp("deleted_at"));
 			return task;
 		};
 	
@@ -71,15 +71,24 @@ public class TaskRepository {
 //	}
 
 	/**
-	 * 全てのタスクをリストしかして、取得するメソッド
-	 * @return 全てのタスクオブジェクトが詰まったリスト
+	 * 全てのタスク情報をtasksテーブルから取得するメソッド
+	 * @return 全てのタスクリスト
 	 */
 	public List<Task> findAll() {
-		String findAllSql = stringUtil.getFindAllSql();
-		List<Task> taskList = jdbcTemplate.query(findAllSql, TASK_ROW_MAPPER);
-		return taskList;
+		String allTaskSql = taskSqlUtil.getFindAllSql();
+		List<Task> allTaskList = jdbcTemplate.query(allTaskSql, TASK_ROW_MAPPER);
+		return allTaskList;
 	}
-	
+
+	/**
+	 * アクティブなタスク情報をtasksテーブルから取得するメソッド
+	 * @return アクティブな全てのタスクリスト
+	 */
+	public List<Task> getActivefindAll() {
+		String allActiveTaskSql = taskSqlUtil.getActiveFindAllSql();
+		List<Task> allActiveTaskList = jdbcTemplate.query(allActiveTaskSql, TASK_ROW_MAPPER);
+		return allActiveTaskList;
+	}
 	
 //	/**
 //	 * tasksテーブルのtask_statusを更新するメソッド

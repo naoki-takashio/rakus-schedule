@@ -19,10 +19,10 @@ public class TaskService {
 	private TaskRepository taskRepository;
 	
 	/* 定数定義 */
-	public static final int STANDBY = 1;
-	public static final int WORKING = 2;
-	public static final int INREVIEW = 3;
-	public static final int DONE = 4;
+	private static final int STANDBY = 1;
+	private static final int WORKING = 2;
+	private static final int INREVIEW = 3;
+	private static final int DONE = 4;
 
 	/**
 	 * TaskRepositoryクラスのfindAllメソッドを利用し、全てのタスク情報を取得するメソッド
@@ -48,10 +48,10 @@ public class TaskService {
 		List<Task> doneTaskList = new ArrayList<Task>();
 		
 		/* 全てのタスクを一旦取得 */
-		List<Task> taskList = taskRepository.findAll();
+		List<Task> temporarilyTaskList = taskRepository.findAll();
 		
 		/* 取得したタスクリストをtask_status毎に分ける */
-		for (Task task : taskList){
+		for (Task task : temporarilyTaskList){
 			
 			switch (task.getTaskStatus()){
 				case STANDBY:
@@ -70,24 +70,7 @@ public class TaskService {
 					// task_statusがDoneの場合
 					doneTaskList.add(task);
 					break;
-			}
-//			
-//			if (task.getTaskStatus() == 1){
-//				// task_statusがStandByの場合
-//				standByTaskList.add(task);
-//						
-//			} else if (task.getTaskStatus() == 2){
-//				// task_statusがWorkingの場合
-//				workingTaskList.add(task);
-//				
-//			} else if(task.getTaskStatus() == 3){
-//				// task_statusがInReviewの場合
-//				inReviewTaskList.add(task);
-//				
-//			}else if(task.getTaskStatus() == 4){
-//				// task_statusがDoneの場合
-//				doneTaskList.add(task);
-//			}
+			}	
 			
 		}
 		/* それぞれのステータスで格納したリストをオブジェクト型のリストに格納する */
@@ -99,4 +82,5 @@ public class TaskService {
 		return allTaskList;
 	}
 		
+	
 }

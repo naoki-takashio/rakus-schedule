@@ -17,7 +17,7 @@ import com.example.rakus_schedule.repository.TaskRepository;
 import com.example.rakus_schedule.service.TaskService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/kanban")
 public class TaskController {
 
 	@Autowired
