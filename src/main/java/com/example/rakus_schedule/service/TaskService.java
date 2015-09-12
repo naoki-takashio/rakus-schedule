@@ -19,10 +19,10 @@ public class TaskService {
 	private TaskRepository taskRepository;
 	
 	/* 定数定義 */
-	private static final int STANDBY = 1;
-	private static final int WORKING = 2;
-	private static final int INREVIEW = 3;
-	private static final int DONE = 4;
+	private static final int STANDBY = 0;
+	private static final int WORKING = 1;
+	private static final int INREVIEW = 2;
+	private static final int DONE = 3;
 
 	/**
 	 * TaskRepositoryクラスのfindAllメソッドを利用し、全てのタスク情報を取得するメソッド
