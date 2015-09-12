@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.rakus_schedule.domain.Task;
+import com.example.rakus_schedule.service.CreateTestTaskData;
 import com.example.rakus_schedule.service.TaskService;
 
 @Controller
@@ -20,6 +21,9 @@ public class TaskController {
 
 	@Autowired
 	private TaskService taskService;
+
+	@Autowired
+	private CreateTestTaskData createTestTaskData;
 
 	@ModelAttribute
 	public TaskForm setUpForm() {
@@ -33,12 +37,14 @@ public class TaskController {
 	 * @return
 	 */
 	@RequestMapping
-	public String top(Model model) {		
-		List<Object> allTaskList = taskService.kanbanView();
-		model.addAttribute("allTaskList",allTaskList);
+	public String top(Model model) {
+		// List<Object> allTaskList = taskService.kanbanView();
+		// 動作確認用のテストデータ
+		List<Object> allTaskList = createTestTaskData.createTestTaskList();
+		model.addAttribute("allTaskList", allTaskList);
 		return "top";
 	}
-	
+
 	/**
 	 * 新規タスクをDBに登録する。 タイトルと開始日に対するvalidateがあり formクラスで、validateは行う
 	 * 
