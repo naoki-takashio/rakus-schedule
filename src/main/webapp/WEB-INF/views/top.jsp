@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-<meta charset=UTF-8">
+<meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="Stylesheet" type="text/css" href="css/jquery-ui.min.css">
 <script type="text/javascript" src="js/jquery.js"></script>
