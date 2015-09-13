@@ -56,7 +56,7 @@
 				<div><textarea>入力してください</textarea></div>
 			</form>
 		</div>
-		<a href="javascript:test(5,1);" id="btnSave">SAVE</a>
+		<a href="javascript:void(0);" id="btnSave">SAVE</a>
 	</div><!-- #dialogAddTask -->
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
@@ -64,27 +64,28 @@
 <script type="text/javascript">
 //全体表示
 $(document).ready(function(){
+	var status,task;
 	<c:forEach var="status" items="${allTaskList}">
 		<c:forEach var="task" items="${status}">
-			var status = '#status' + '${task.taskStatus}';
-			var task = status  + ' .task';
-			$(status).append('<div class="task"></div>');
+			status = '#status' + '${task.taskStatus}';
+			task = status  + ' .task.${task.orderNo}';
+			$(status).append('<div class="task ${task.orderNo}"></div>');
 			$(task).append('<div class="taskId">' + <c:out value="${task.taskId}"/> + '</div>');
 			$(task).append('<div class="taskName"><c:out value="${task.taskName}"/></div>');
 			$(task).append('<div class="priority"><c:out value="${task.priority}"/></div>');
 			$(task).append('<div class="btnEdit"><img src="img/edit.png"></div>');
 			$(task).append('<div class="engineerId"><img src="img/1.png"><p>担当者</p></div>');
 			if(status === '#status0'){
-				$(task).append('<div class="anticipatedCommencementDate">' + <c:out value="${task.anticipatedCommencementDate}"/> + '</div>');
-				$(task).append('<div class="expectedCompletionDate">' + <c:out value="${task.expectedCompletionDate}"/> + '</div>');
+				$(task).append('<div class="anticipatedCommencementDate"><c:out value="${task.anticipatedCommencementDate}"/></div>');
+				$(task).append('<div class="expectedCompletionDate"><c:out value="${task.expectedCompletionDate}"/></div>');
 			}else if(status === '#status1') {
-				$(task).append('<div class="anticipatedCommencementDate">' + <c:out value="${task.anticipatedCommencementDate}"/> + '</div>');
-				$(task).append('<div class="expectedCompletionDate">' + <c:out value="${task.expectedCompletionDate}"/> + '</div>');
+				$(task).append('<div class="anticipatedCommencementDate"><c:out value="${task.anticipatedCommencementDate}"/></div>');
+				$(task).append('<div class="expectedCompletionDate"><c:out value="${task.expectedCompletionDate}"/></div>');
 			}else if(status === '#status2') {
-				$(task).append('<div class="anticipatedCommencementDate">' + <c:out value="${task.anticipatedCommencementDate}"/> + '</div>');
-				$(task).append('<div class="expectedCompletionDate">' + <c:out value="${task.expectedCompletionDate}"/> + '</div>');
+				$(task).append('<div class="anticipatedCommencementDate"><c:out value="${task.anticipatedCommencementDate}"/></div>');
+				$(task).append('<div class="expectedCompletionDate"><c:out value="${task.expectedCompletionDate}"/></div>');
 			}else {
-				$(task).append('<div class="completionDate">' + <c:out value="${task.completionDate}"/> + '</div>');
+				$(task).append('<div class="completionDate"><c:out value="${task.completionDate}"/></div>');
 			}
 		</c:forEach>
 	</c:forEach>
@@ -94,30 +95,32 @@ $(document).ready(function(){
 function statusHeight(){
 	var statusHeight = '200px';
 	$('.status').each(function(){
-		if(this.height > statusHeight) {
-			statusHeight = this.height();
+		if($(this).height > statusHeight) {
+			statusHeight = $(this).height() + 20;
 		}
 	})
 	$('.status').css('height', statusHeight);
 }
 </script>
 <script>
+$('#btnSave').on('click', function(){
+	var formTest = $('#formCreateTask').serialize;
+	alert(formTest);
+})
 function test(id, status){
   $.ajax({
     url: "/?action=create",
     type: "POST",
     data: {
-      'id': id,
-      'status': status
+      id: id,
+      status: status
     }
   }).done(function(data){
     alert('success!');
   }).fail(function(data){
-	    alert(data.id);
-	    alert('error!');
+    alert('error!');
   })
 }
 </script>
 </body>
 </html>
-
