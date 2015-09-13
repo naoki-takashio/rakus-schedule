@@ -13,6 +13,7 @@ body{
 }
 header{
   background: #FFF9E8;
+  box-shadow: 1px 1px 0px rgba(0,0,0,0.3);
   display: table;
   height: 50px;
   width: 100%;
@@ -22,7 +23,7 @@ h1{
   display: table-cell;
   font-size: 3rem;
   padding: 0 0 0 15px;
-  text-shadow: 1px 2px 3px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
   vertical-align: middle;
 }
 article{
@@ -31,17 +32,24 @@ article{
   padding: 20px 0;
   width: 100%;
 }
+a{
+  text-decoration: none;
+}
 .status{
   background: #fff;
   border: 2px solid #ddd;
+  border-bottom: 4px solid #ddd;
+  border-radius: 6px;
   float: left;
   margin: 0 1%;
   padding: 0 0 15px 0;
+  position: relative;
   width: 23%;
 }
 .statusName{
-  background: #fff;
+  background: #ddd;
   border-bottom: 2px solid #ddd;
+  border-radius-top: 4px;
   font-size: 2.2rem;
   font-weight: bold;
   padding: 0 8px;
@@ -50,14 +58,17 @@ article{
 .task{
   background: #eee;
   border: 2px solid #ddd;
+  border-bottom: 4px solid #ddd;
+  border-radius: 6px;
   font-size: 1.6rem;
   height: 150px;
   margin: 15px auto 0 auto;
   position: relative;
   width: 90%;
 }
-.taskNo{
+.taskId{
   background: #ddd;
+  padding: 0 5px;
 }
 .priority{
   background: blue;
@@ -117,4 +128,53 @@ article{
   right: 0;
   text-align: center;
   width: 50%;
+}
+.completionDate{
+  bottom: 5px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+#btnAddTask{
+  background: #FFAC1B;
+  box-shadow: 0px 2px 0px rgba(0,0,0,0.3);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 5px 0;
+  position: absolute;
+  right: 2px;
+  text-align: center;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+  top: 2px;
+  width: 90px;
+}
+#dialogAddTask{
+  font-size: 1.2rem;
+  width: 600px;
+}
+#dialogContentsLeft,#dialogContentsRight{
+	float: left;
+	width: 50%;
+}
+#dialogContentsLeft div,#dialogContentsRight div{
+	height: 50px;
+}
+#btnSave{
+  background: #FFAC1B;
+  box-shadow: 0px 2px 0px rgba(0,0,0,0.3);
+  border-radius: 4px;
+  bottom: 5px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  left: 0;
+  margin: auto;
+  padding: 5px 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+  width: 90px;
 }
