@@ -31,16 +31,16 @@ public class TaskController {
 	}
 
 	/**
-	 * 最初に画面を開く際、全てのタスクを表示
+	 * 最初に画面を開く際、アクティブなタスク情報を表示
 	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping
 	public String top(Model model) {
-		// List<Object> allTaskList = taskService.kanbanView();
-		// 動作確認用のテストデータ
-		List<Object> allTaskList = createTestTaskData.createTestTaskList();
+		List<Object> allTaskList = taskService.kanbanView();
+		// 動作確認用のテストデータ。DB環境構築できてない人はこっちを使う。
+		//List<Object> allTaskList = createTestTaskData.createTestTaskList();
 		model.addAttribute("allTaskList", allTaskList);
 		return "top";
 	}

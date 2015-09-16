@@ -48,8 +48,8 @@ public class TaskService {
 		// task_statusがDoneのものを格納するリスト
 		List<Task> doneTaskList = new ArrayList<Task>();
 
-		/* 全てのタスクを一旦取得 */
-		List<Task> temporarilyTaskList = taskRepository.findAll();
+		/* アクティブなタスクを一旦取得 */
+		List<Task> temporarilyTaskList = taskRepository.getActivefindAll();
 
 		/* 取得したタスクリストをtask_status毎に分ける */
 		for (Task task : temporarilyTaskList) {

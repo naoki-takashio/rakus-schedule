@@ -21,8 +21,8 @@ public class CreateTestTaskData {
 
 	public List<Object> createTestTaskList() {
 	
-	Date date = new Date(0);
-	Timestamp time = new Timestamp(0);
+	Date date = new Date(System.currentTimeMillis());
+	Timestamp time = new Timestamp(System.currentTimeMillis());
 	List<String> testList = new ArrayList<String>();
 	
 	Task testTask1 = new Task(1,"test1",0,"testtest",1,"高",0,"testtag",time,1,2,1,time,date,date,date,date,date,false,false,testList);
