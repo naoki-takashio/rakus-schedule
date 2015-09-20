@@ -66,17 +66,15 @@ public class taskSqlUtil {
 		allActiveTaskSql.append("	,commencement_date");
 		allActiveTaskSql.append("	,finish_date");
 		allActiveTaskSql.append("	,completion_date");
-		allActiveTaskSql.append("	,completion_flg");
 		allActiveTaskSql.append("	,created_at");
 		allActiveTaskSql.append("	,updated_at");
-		allActiveTaskSql.append("	,deleted_flg");
-		allActiveTaskSql.append("FROM");
+		allActiveTaskSql.append("	FROM");
 		allActiveTaskSql.append("	tasks");
-		allActiveTaskSql.append("WHERE");
-		allActiveTaskSql.append("	completion_flg = 0");
+		allActiveTaskSql.append("	WHERE");
+		allActiveTaskSql.append("	completion_flg is not true");
 		allActiveTaskSql.append("	AND");
-		allActiveTaskSql.append("	deleted_flg = 0");
-		allActiveTaskSql.append("ORDER BY");
+		allActiveTaskSql.append("	deleted_flg is not true");
+		allActiveTaskSql.append("	ORDER BY");
 		allActiveTaskSql.append("	order_no;");
 		
 		return allActiveTaskSql.toString();

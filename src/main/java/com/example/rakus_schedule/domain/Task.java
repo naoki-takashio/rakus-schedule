@@ -34,7 +34,7 @@ public class Task {
 	/**
 	 * タスクコンテンツ
 	 */
-	private String taskContents;
+	private String taskContent;
 	
 	/**
 	 * 同タスク内の順番

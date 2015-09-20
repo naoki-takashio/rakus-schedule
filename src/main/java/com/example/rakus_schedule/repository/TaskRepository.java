@@ -27,7 +27,7 @@ public class TaskRepository {
 		task.setTaskId(rs.getInt("task_id"));
 		task.setTaskName(rs.getString("task_name"));
 		task.setTaskStatus(rs.getInt("task_status"));
-		task.setTaskContents(rs.getString("task_contents"));
+		task.setTaskContent(rs.getString("task_content"));
 		task.setOrderNo(rs.getInt("order_no"));
 		task.setPriority(rs.getString("priority"));
 		task.setProgress(rs.getInt("progress"));
@@ -35,18 +35,18 @@ public class TaskRepository {
 		task.setCreatorId(rs.getInt("creator_id"));
 		task.setEngineerId(rs.getInt("engineer_id"));
 		task.setProjectId(rs.getInt("project_id"));
-		task.setAnticipatedCommencementDate(rs.getDate("anticipatedCommencement_date"));
+		task.setAnticipatedCommencementDate(rs.getDate("anticipated_commencement_date"));
 		task.setUpdatedAt(rs.getTimestamp("updated_at"));
 		task.setAnticipatedCommencementDate(rs
-				.getDate("anticipatedCommencement_date"));
+				.getDate("anticipated_commencement_date"));
 		task.setExpectedCompletionDate(rs.getDate("expected_completion_date"));
 		task.setCommecementDate(rs.getDate("commencement_date"));
 		task.setFinishDate(rs.getDate("finish_date"));
 		task.setCompletionDate(rs.getDate("completion_date"));
-		task.setCompletionFlg(rs.getBoolean("completion_flg"));
+		//task.setCompletionFlg(rs.getBoolean("completion_flg"));
 		task.setCreatedAt(rs.getTimestamp("created_at"));
 		task.setUpdatedAt(rs.getTimestamp("updated_at"));
-		task.setDeletedFlg(rs.getBoolean("deleted_flg"));
+		//task.setDeletedFlg(rs.getBoolean("deleted_flg"));
 			return task;
 		};
 	
