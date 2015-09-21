@@ -53,7 +53,7 @@
 				</div>
 				<div><input type="date" name="anticipatedCommencementDate"></div>
 				<div><input type="date" name="expectedCompletionDate"></div>
-				<div><textarea name="taskContent" placeholder="入力してください"></textarea></div>
+				<div><textarea name="taskContent" id="taskContent" placeholder="入力してください"></textarea></div>
 				<input type="hidden" name="orderNo" value="0">
 			</form>
 		</div>
@@ -63,35 +63,50 @@
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/viewDialog.js"></script>
 <script type="text/javascript">
-//全体表示
 $(document).ready(function(){
+	getTaskList();
+});
+//全体表示
+function getTaskList(){
 	var status,task;
-	<c:forEach var="status" items="${allTaskList}">
+/* 	$('.status').children('.task').remove();
+ */	<c:forEach var="status" items="${allTaskList}">
 		<c:forEach var="task" items="${status}">
+			var obj${task.taskId} = {
+				taskId:${task.taskId},
+				taskName:"${task.taskName}",
+/*  				taskContent:(("${task.taskContent}").replace(/¥r¥n/g, '')),
+ */				priority:"${task.priority}",
+				anticipatedCommencementDate:"${task.anticipatedCommencementDate}",
+				expectedCompletionDate:"${task.expectedCompletionDate}",
+				comment:"${task.comment}"
+			};
 			status = '#status' + '${task.taskStatus}';
 			task = status  + ' .task.${task.orderNo}';
 			$(status).append('<div class="task ${task.orderNo}"></div>');
-			$(task).append('<div class="taskId">' + <c:out value="${task.taskId}"/> + '</div>');
-			$(task).append('<div class="taskName"><c:out value="${task.taskName}"/></div>');
-			$(task).append('<div class="priority"><c:out value="${task.priority}"/></div>');
+			$(task).append('<div class="taskId">' + obj${task.taskId}.taskId +'</div>');
+ 			$(task).append('<div class="taskName">' + obj${task.taskId}.taskName + '</div>');
+			$(task).append('<div class="priority">' + obj${task.taskId}.priority + '</div>');
 			$(task).append('<div class="btnEdit"><img src="img/edit.png"></div>');
 			$(task).append('<div class="engineerId"><img src="img/1.png"><p>担当者</p></div>');
 			if(status === '#status0'){
-				$(task).append('<div class="anticipatedCommencementDate"><c:out value="${task.anticipatedCommencementDate}"/></div>');
-				$(task).append('<div class="expectedCompletionDate"><c:out value="${task.expectedCompletionDate}"/></div>');
+				$(task).append('<div class="anticipatedCommencementDate">' + obj${task.taskId}.anticipatedCommencementDate + '</div>');
+				$(task).append('<div class="expectedCompletionDate">' + obj${task.taskId}.expectedCompletionDate + '</div>');
 			}else if(status === '#status1') {
-				$(task).append('<div class="anticipatedCommencementDate"><c:out value="${task.anticipatedCommencementDate}"/></div>');
-				$(task).append('<div class="expectedCompletionDate"><c:out value="${task.expectedCompletionDate}"/></div>');
+				$(task).append('<div class="anticipatedCommencementDate">' + obj${task.taskId}.anticipatedCommencementDate + '</div>');
+				$(task).append('<div class="expectedCompletionDate">' + obj${task.taskId}.expectedCompletionDate + '</div>');
 			}else if(status === '#status2') {
-				$(task).append('<div class="anticipatedCommencementDate"><c:out value="${task.anticipatedCommencementDate}"/></div>');
-				$(task).append('<div class="expectedCompletionDate"><c:out value="${task.expectedCompletionDate}"/></div>');
+				$(task).append('<div class="anticipatedCommencementDate">' + obj${task.taskId}.anticipatedCommencementDate + '</div>');
+				$(task).append('<div class="expectedCompletionDate">' + obj${task.taskId}.expectedCompletionDate + '</div>');
 			}else {
-				$(task).append('<div class="completionDate"><c:out value="${task.completionDate}"/></div>');
+				$(task).append('<div class="completionDate">' + obj${task.taskId}.completionDate + '</div>');
 			}
-		</c:forEach>
+/* 			$(task).append('<textarea>"${task.taskContent}"</textarea>');
+ */ 		</c:forEach>
 	</c:forEach>
 	statusHeight();
-});
+}
+
 //高さ調節
 function statusHeight(){
 	var statusHeight;
@@ -108,6 +123,7 @@ function statusHeight(){
 </script>
 <script>
 $('#btnSave').on('click', function(){
+	alert(($('#taskContent').val()).replace('¥r¥n', ''));
 	var formTest = $('#formCreateTask').serialize();
 	test(formTest);
 })
@@ -118,7 +134,8 @@ function test(data){
     type: "POST",
     data: data
   }).done(function(data){
-    alert('success!');
+	  alert('成功だよ！');
+	getTaskList();
   }).fail(function(data){
     alert('error!');
   })
