@@ -75,8 +75,8 @@ function getTaskList(){
 			var obj${task.taskId} = {
 				taskId:${task.taskId},
 				taskName:"${task.taskName}",
-/*  				taskContent:(("${task.taskContent}").replace(/¥r¥n/g, '')),
- */				priority:"${task.priority}",
+  				taskContent:"${task.taskContent}",
+				priority:"${task.priority}",
 				anticipatedCommencementDate:"${task.anticipatedCommencementDate}",
 				expectedCompletionDate:"${task.expectedCompletionDate}",
 				comment:"${task.comment}"
