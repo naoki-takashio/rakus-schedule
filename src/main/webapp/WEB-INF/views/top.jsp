@@ -69,13 +69,13 @@ $(document).ready(function(){
 //全体表示
 function getTaskList(){
 	var status,task;
-/* 	$('.status').children('.task').remove();
- */	<c:forEach var="status" items="${allTaskList}">
+ 	$('.status').children('.task').remove();
+	<c:forEach var="status" items="${allTaskList}">
 		<c:forEach var="task" items="${status}">
 			var obj${task.taskId} = {
 				taskId:${task.taskId},
 				taskName:"${task.taskName}",
-  				taskContent:"${task.taskContent}",
+   				taskContent:"${task.taskContent}",
 				priority:"${task.priority}",
 				anticipatedCommencementDate:"${task.anticipatedCommencementDate}",
 				expectedCompletionDate:"${task.expectedCompletionDate}",
@@ -101,7 +101,8 @@ function getTaskList(){
 			}else {
 				$(task).append('<div class="completionDate">' + obj${task.taskId}.completionDate + '</div>');
 			}
-/* 			$(task).append('<textarea>"${task.taskContent}"</textarea>');
+/* 			var kaigyou = ('${task.taskContent}').replace('<br>', '&#13;');
+ 			$(task).append('<textarea>' + kaigyou + '</textarea>');
  */ 		</c:forEach>
 	</c:forEach>
 	statusHeight();
@@ -123,11 +124,10 @@ function statusHeight(){
 </script>
 <script>
 $('#btnSave').on('click', function(){
-	alert(($('#taskContent').val()).replace('¥r¥n', ''));
-	var formTest = $('#formCreateTask').serialize();
+	var formTest = ($('#formCreateTask').serialize()).replace('%0D%0A', '<br>');
 	test(formTest);
 })
-function test(data){
+ function test(data){
 	console.log(data);
   $.ajax({
     url: "/kanban/create",
@@ -135,7 +135,7 @@ function test(data){
     data: data
   }).done(function(data){
 	  alert('成功だよ！');
-	getTaskList();
+	window.location.href = '/kanban';
   }).fail(function(data){
     alert('error!');
   })
