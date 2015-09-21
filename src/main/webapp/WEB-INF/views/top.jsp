@@ -42,7 +42,7 @@
 			<div>Descriptions</div>
 		</div>
 		<div id="dialogContentsRight">
-			<form id="formCreateTask" action="javascript:void(0);">
+			<form id="formCreateTask" action="javascript:void(0);" method="POST">
 				<div><input type="text" name="taskName"></div>
 				<div><input type="hidden" name="status" value="0">Standby</div>
 				<div>
@@ -53,7 +53,8 @@
 				</div>
 				<div><input type="date" name="anticipatedCommencementDate"></div>
 				<div><input type="date" name="expectedCompletionDate"></div>
-				<div><textarea>入力してください</textarea></div>
+				<div><textarea name="descriptions" placeholder="入力してください"></textarea></div>
+				<input type="hidden" name="orderNo" value="0">
 			</form>
 		</div>
 		<a href="javascript:void(0);" id="btnSave">SAVE</a>
@@ -93,10 +94,13 @@ $(document).ready(function(){
 });
 //高さ調節
 function statusHeight(){
-	var statusHeight = '200px';
+	var statusHeight;
 	$('.status').each(function(){
 		if($(this).height > statusHeight) {
 			statusHeight = $(this).height() + 20;
+		}
+		if($(this).hasClass('.task')) {
+			statusHeight = 200;
 		}
 	})
 	$('.status').css('height', statusHeight);
@@ -104,17 +108,15 @@ function statusHeight(){
 </script>
 <script>
 $('#btnSave').on('click', function(){
-	var formTest = $('#formCreateTask').serialize;
-	alert(formTest);
+	var formTest = $('#formCreateTask').serialize();
+	test(formTest);
 })
-function test(id, status){
+function test(data){
+	console.log(data);
   $.ajax({
-    url: "/?action=create",
+    url: "/kanban/create",
     type: "POST",
-    data: {
-      id: id,
-      status: status
-    }
+    data: data
   }).done(function(data){
     alert('success!');
   }).fail(function(data){
