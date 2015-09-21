@@ -44,7 +44,7 @@
 		<div id="dialogContentsRight">
 			<form id="formCreateTask" action="javascript:void(0);" method="POST">
 				<div><input type="text" name="taskName"></div>
-				<div><input type="hidden" name="status" value="0">Standby</div>
+				<div><input type="hidden" name="taskStatus" value="0">Standby</div>
 				<div>
 					<label><input type="radio" name="priority" value="高" checked="checked">高</label>
 					<label><input type="radio" name="priority" value="中">中</label>
@@ -53,7 +53,7 @@
 				</div>
 				<div><input type="date" name="anticipatedCommencementDate"></div>
 				<div><input type="date" name="expectedCompletionDate"></div>
-				<div><textarea name="descriptions" placeholder="入力してください"></textarea></div>
+				<div><textarea name="taskContent" placeholder="入力してください"></textarea></div>
 				<input type="hidden" name="orderNo" value="0">
 			</form>
 		</div>
