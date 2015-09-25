@@ -10,6 +10,8 @@ html{
 }
 body{
   background: url(../img/bg.png);
+  height: 100%;
+  width: 100%;
 }
 header{
   background: #FFF9E8;
@@ -46,6 +48,10 @@ a{
   position: relative;
   width: 23%;
 }
+.listStatus{
+  height: 100%;
+  width: 100%;
+}
 .statusName{
   background: #ddd;
   border-bottom: 2px solid #ddd;
@@ -81,6 +87,23 @@ a{
   top: 1px;
   width: 40px;
 }
+#btnViewTaskDisp{
+  height: 100%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+.btnEdit{
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 26px;
+  z-index: 100;
+}
 .btnEdit img{
   position: absolute;
   right: 0;
@@ -95,6 +118,7 @@ a{
   position: absolute;
   top: 30px;
   width: 70%;
+  z-index: 1;
 }
 .engineerId{
   background: #fff;
@@ -135,7 +159,7 @@ a{
   text-align: center;
   width: 100%;
 }
-#btnAddTask{
+#btnTaskCreate{
   background: #FFAC1B;
   box-shadow: 0px 2px 0px rgba(0,0,0,0.3);
   border-radius: 4px;
@@ -177,4 +201,8 @@ a{
   text-align: center;
   text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
   width: 90px;
+}
+textarea{
+  position: absolute;
+	z-index:1000;
 }

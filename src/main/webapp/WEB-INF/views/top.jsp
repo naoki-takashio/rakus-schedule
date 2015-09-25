@@ -7,10 +7,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="Stylesheet" type="text/css" href="css/ui-lightness/jquery-ui.min.css">
-<title>RAKUSCHEDULE</title>
-<link href="/css/style.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="Stylesheet" type="text/css" href="/css/ui-lightness/jquery-ui.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+ --><title>RAKUSCHEDULE</title>
 <link href='http://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -18,76 +18,66 @@
 	    <h1>RAKUSCHEDULE</h1>
 	</header>
 	<article>
-	<div class="status" id="status0">
+	<div class="status">
 		<p class="statusName">Standby</p>
-		<p id="btnAddTask">+Add Task</p>
+		<p id="btnTaskCreate">+Add Task</p>
+		<div class="listStatus" id="status0"></div>
 	</div>
-	<div class="status" id="status1">
+	<div class="status">
 		<p class="statusName">Working</p>
+		<div class="listStatus" id="status1"></div>
 	</div>
-	<div class="status" id="status2">
+	<div class="status">
 		<p class="statusName">In Review</p>
+		<div class="listStatus" id="status2"></div>
 	</div>
-	<div class="status" id="status3">
+	<div class="status">
 		<p class="statusName">Done</p>
+		<div class="listStatus" id="status3"></div>
 	</div>
 	</article>
-	<div id="dialogAddTask" title="+Add Task">
-		<div id="dialogContentsLeft">
-			<div>Task Name</div>
-			<div>Status</div>
-			<div>Priority</div>
-			<div>Date Start</div>
-			<div>Date End</div>
-			<div>Descriptions</div>
-		</div>
-		<div id="dialogContentsRight">
-			<form id="formCreateTask" action="javascript:void(0);" method="POST">
-				<div><input type="text" name="taskName"></div>
-				<div><input type="hidden" name="taskStatus" value="0">Standby</div>
-				<div>
-					<label><input type="radio" name="priority" value="高" checked="checked">高</label>
-					<label><input type="radio" name="priority" value="中">中</label>
-					<label><input type="radio" name="priority" value="低">低</label>
-					<label><input type="radio" name="priority" value="保留">保留</label>
-				</div>
-				<div><input type="date" name="anticipatedCommencementDate"></div>
-				<div><input type="date" name="expectedCompletionDate"></div>
-				<div><textarea name="taskContent" id="taskContent" placeholder="入力してください"></textarea></div>
-				<input type="hidden" name="orderNo" value="0">
-			</form>
-		</div>
-		<a href="javascript:void(0);" id="btnSave">SAVE</a>
-	</div><!-- #dialogAddTask -->
+	<div id="dialogTaskCreate" title="+Task Add"></div>
+	<div id="dialogTaskEdit" title="+Task Edit"></div>
+	<div id="dialogTaskDisp" title="+Task Disp"></div>
+	
+	
+	
+	
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootbox.min.js"></script>
 <script type="text/javascript" src="js/viewDialog.js"></script>
+<script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	getTaskList();
 });
 //全体表示
 function getTaskList(){
-	var status,task;
- 	$('.status').children('.task').remove();
+	var obj,status,task;
 	<c:forEach var="status" items="${allTaskList}">
 		<c:forEach var="task" items="${status}">
-			var obj${task.taskId} = {
+			obj${task.taskId} = {
 				taskId:${task.taskId},
+				taskStatus:"${task.taskStatus}",
 				taskName:"${task.taskName}",
    				taskContent:"${task.taskContent}",
 				priority:"${task.priority}",
 				anticipatedCommencementDate:"${task.anticipatedCommencementDate}",
 				expectedCompletionDate:"${task.expectedCompletionDate}",
+				completionDate:"${task.completionDate}",
 				comment:"${task.comment}"
 			};
 			status = '#status' + '${task.taskStatus}';
 			task = status  + ' .task.${task.orderNo}';
-			$(status).append('<div class="task ${task.orderNo}"></div>');
-			$(task).append('<div class="taskId">' + obj${task.taskId}.taskId +'</div>');
- 			$(task).append('<div class="taskName">' + obj${task.taskId}.taskName + '</div>');
-			$(task).append('<div class="priority">' + obj${task.taskId}.priority + '</div>');
-			$(task).append('<div class="btnEdit"><img src="img/edit.png"></div>');
+			$(status).append('<div class="task ${task.orderNo}" id="${task.taskId}"></div>');
+			$(task).append(
+				'<div class="taskId">' + obj${task.taskId}.taskId +'</div>\
+				<div class="taskName">' + obj${task.taskId}.taskName + '</div>\
+				<div class="priority">' + obj${task.taskId}.priority + '</div>\
+				<div class="btnEdit"><a href="javascript:viewTaskEdit(' + 'obj' + obj${task.taskId}.taskId + ')"><img src="img/edit.png"></a></div>'
+			);
 			$(task).append('<div class="engineerId"><img src="img/1.png"><p>担当者</p></div>');
 			if(status === '#status0'){
 				$(task).append('<div class="anticipatedCommencementDate">' + obj${task.taskId}.anticipatedCommencementDate + '</div>');
@@ -101,44 +91,84 @@ function getTaskList(){
 			}else {
 				$(task).append('<div class="completionDate">' + obj${task.taskId}.completionDate + '</div>');
 			}
+			$(task).append('<a href="javascript:viewTaskDisp(' + 'obj' + obj${task.taskId}.taskId + ')" id="btnViewTaskDisp"></a>');
 /* 			var kaigyou = ('${task.taskContent}').replace('<br>', '&#13;');
  			$(task).append('<textarea>' + kaigyou + '</textarea>');
  */ 		</c:forEach>
 	</c:forEach>
 	statusHeight();
 }
-
 //高さ調節
 function statusHeight(){
-	var statusHeight;
-	$('.status').each(function(){
-		if($(this).height > statusHeight) {
-			statusHeight = $(this).height() + 20;
+	var statusHeight = 0;
+	$('.listStatus').each(function(){
+		var listStatusHeight = $(this).height();
+		if(listStatusHeight > statusHeight) {
+			statusHeight = listStatusHeight + 70;
 		}
-		if($(this).hasClass('.task')) {
-			statusHeight = 200;
+		if(statusHeight === 0) {
+			statusHeight = 140;
 		}
 	})
 	$('.status').css('height', statusHeight);
 }
+//タスク編集ダイアログ表示
+function viewTaskEdit(taskId){
+	var objContent = getTaskEdit(taskId);
+	$('#dialogTaskEdit').html(objContent);
+	$('#dialogTaskEdit').dialog('open');
+	return false;
+
+}
+//タスク詳細ダイアログ表示
+function viewTaskDisp(taskId){
+	var objContent = getTaskDisp(taskId);
+	$('#dialogTaskDisp').html(objContent);
+	$('#dialogTaskDisp').dialog('open');
+	return false;
+
+}
 </script>
 <script>
-$('#btnSave').on('click', function(){
-	var formTest = ($('#formCreateTask').serialize()).replace('%0D%0A', '<br>');
-	test(formTest);
-})
- function test(data){
-	console.log(data);
-  $.ajax({
-    url: "/kanban/create",
-    type: "POST",
-    data: data
-  }).done(function(data){
-	  alert('成功だよ！');
-	window.location.href = '/kanban';
-  }).fail(function(data){
-    alert('error!');
-  })
+    $('.listStatus').sortable({
+    	connectWith:'.listStatus',
+   		cursor:'move',
+   		start : function(evt, ui) {
+   			console.log(evt[0]);
+   		},
+   		update:function(evt, ui) {
+   			var te = $(this).sortable('toArray');
+   			alert(te);
+   		}
+    });
+    $('.listStatus').disableSelection();
+</script>
+<script>
+//タスク作成
+function taskCreate(){
+	var form = ($('#formTaskCreate').serialize()).replace('%0D%0A', '<br>');
+	$.ajax({
+    	url: "/kanban/create",
+    	type: "POST",
+    	data: form
+	}).done(function(data){
+		window.location.href = '/kanban';
+	}).fail(function(data){
+    	alert('error!');
+	})
+}
+//タスク編集
+function taskEdit(){
+	var form = ($('#formTaskEdit').serialize()).replace('%0D%0A', '<br>');
+	$.ajax({
+    	url: "/kanban/edit",
+    	type: "POST",
+    	data: form
+	}).done(function(data){
+		window.location.href = '/kanban';
+	}).fail(function(data){
+    	alert('error!');
+	})
 }
 </script>
 </body>
