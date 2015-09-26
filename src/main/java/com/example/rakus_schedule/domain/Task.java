@@ -9,8 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author ttanaka
- * タスクのドメイン
+ * @author ttanaka タスクのドメイン
  */
 @Data
 @AllArgsConstructor
@@ -20,12 +19,12 @@ public class Task {
 	/**
 	 * タスクID
 	 */
-	private Integer taskId;	
+	private Integer taskId;
 	/**
-	 * タスク名 
+	 * タスク名
 	 */
 	private String taskName;
-	
+
 	/**
 	 * タスクステータス
 	 */
@@ -35,12 +34,12 @@ public class Task {
 	 * タスクコンテンツ
 	 */
 	private String taskContent;
-	
+
 	/**
 	 * 同タスク内の順番
 	 */
 	private Integer orderNo;
-	
+
 	/**
 	 * 優先度
 	 */
@@ -102,7 +101,7 @@ public class Task {
 	 * 削除フラグ
 	 */
 	private boolean deletedFlg;
-	
+
 	/**
 	 * コメント
 	 */

@@ -40,7 +40,7 @@ public class TaskController {
 	public String top(Model model) {
 		List<Object> allTaskList = taskService.kanbanView();
 		// 動作確認用のテストデータ。DB環境構築できてない人はこっちを使う。
-		//List<Object> allTaskList = createTestTaskData.createTestTaskList();
+		// List<Object> allTaskList = createTestTaskData.createTestTaskList();
 		model.addAttribute("allTaskList", allTaskList);
 		return "top";
 	}
@@ -57,10 +57,6 @@ public class TaskController {
 	@RequestMapping(value = "create")
 	public String create(@Validated TaskForm form, BindingResult result,
 			Model model) {
-		// formでの入力値チェックはひとまず置いとく。JS側への戻し方わからん。
-		// if(result.hasErrors()){
-		// return null;
-		// }
 		Task task = new Task();
 		BeanUtils.copyProperties(form, task);
 

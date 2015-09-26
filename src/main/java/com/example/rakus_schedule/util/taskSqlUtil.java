@@ -4,17 +4,19 @@ import org.springframework.stereotype.Component;
 
 /**
  * 別クラスから呼び出されるsql文専用のクラス
+ * 
  * @author miyaharashuusaku
- *	
+ *
  */
 @Component
 public class taskSqlUtil {
-    
+
 	/**
 	 * 全てのデータを取得するsqlを返すメソッド。
+	 * 
 	 * @return 全てのデータを取得するsql
 	 */
-	public String getFindAllSql(){
+	public String getFindAllSql() {
 		StringBuilder allaskSql = new StringBuilder();
 		allaskSql.append("SELECT");
 		allaskSql.append("	task_id");
@@ -39,15 +41,16 @@ public class taskSqlUtil {
 		allaskSql.append("	,deleted_flg");
 		allaskSql.append("FROM");
 		allaskSql.append("	tasks");
-		
+
 		return allaskSql.toString();
 	}
 
 	/**
 	 * 全てのデータを取得するsqlを返すメソッド。
+	 * 
 	 * @return 全てのデータを取得するsql
 	 */
-	public String getActiveFindAllSql(){
+	public String getActiveFindAllSql() {
 		StringBuilder allActiveTaskSql = new StringBuilder();
 		allActiveTaskSql.append("SELECT");
 		allActiveTaskSql.append("	task_id");
@@ -76,11 +79,59 @@ public class taskSqlUtil {
 		allActiveTaskSql.append("	deleted_flg is not true");
 		allActiveTaskSql.append("	ORDER BY");
 		allActiveTaskSql.append("	order_no;");
-		
+
 		return allActiveTaskSql.toString();
 	}
-	
-    
 
+	public String updateOrderNoForStandBySql() {
+		StringBuilder updateOrderNoForStandBySql = new StringBuilder();
+		updateOrderNoForStandBySql.append("UPDATE");
+		updateOrderNoForStandBySql.append("	tasks");
+		updateOrderNoForStandBySql.append("	SET");
+		updateOrderNoForStandBySql.append("	order_no =");
+		updateOrderNoForStandBySql.append("	order_no + 1");
+		updateOrderNoForStandBySql.append("	where");
+		updateOrderNoForStandBySql.append("	task_status = 0");
+		return updateOrderNoForStandBySql.toString();
+	}
+
+	public String insertTasksSql() {
+		StringBuilder insertTasks = new StringBuilder();
+		insertTasks.append("INSERT INTO");
+		insertTasks.append("	tasks");
+		insertTasks.append("	(task_name");
+		insertTasks.append("	,task_status");
+		insertTasks.append("	,task_content");
+		insertTasks.append("	,order_no");
+		insertTasks.append("	,priority");
+		insertTasks.append("	,progress");
+		insertTasks.append("	,creator_id");
+		insertTasks.append("	,engineer_id");
+		insertTasks.append("	,project_id");
+		insertTasks.append("	,created_at");
+		insertTasks.append("	,updated_at");
+		insertTasks.append("	,anticipated_commencement_date");
+		insertTasks.append("	,expected_completion_date");
+		insertTasks.append("	,completion_flg");
+		insertTasks.append("	,deleted_flg)");
+		insertTasks.append("	VALUES (");
+		insertTasks.append("	:taskName");
+		insertTasks.append("	,0");
+		insertTasks.append("	,:taskContent");
+		insertTasks.append("	,:orderNo");
+		insertTasks.append("	,:priority");
+		insertTasks.append("	,0");
+		insertTasks.append("	,1");
+		insertTasks.append("	,1");
+		insertTasks.append("	,1");
+		insertTasks.append("	,CURRENT_DATE");
+		insertTasks.append("	,CURRENT_DATE");
+		insertTasks.append("	,:anticipatedCommencementDate");
+		insertTasks.append("	,:expectedCompletionDate");
+		insertTasks.append("	,false");
+		insertTasks.append("	,false);");
+		return insertTasks.toString();
+
+	}
 
 }
