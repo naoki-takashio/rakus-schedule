@@ -94,7 +94,7 @@ public class taskSqlUtil {
 		updateTasksSql.append("	tasks ");
 		updateTasksSql.append("SET");
 		updateTasksSql.append("	task_name = :taskName");
-		updateTasksSql.append("	,task_status = :taskStatus");
+		updateTasksSql.append("	,task_content = :taskContent");
 		updateTasksSql.append("	,order_no = :orderNo");
 		updateTasksSql.append("	,priority = :priority");
 		// updateTasksSql.append("	,progress = :progress");

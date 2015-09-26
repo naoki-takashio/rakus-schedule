@@ -66,8 +66,7 @@ function getTaskList(){
 				priority:"${task.priority}",
 				anticipatedCommencementDate:"${task.anticipatedCommencementDate}",
 				expectedCompletionDate:"${task.expectedCompletionDate}",
-				completionDate:"${task.completionDate}",
-				comment:"${task.comment}"
+				completionDate:"${task.completionDate}"
 			};
 			status = '#status' + '${task.taskStatus}';
 			task = status  + ' .task.${task.orderNo}';
