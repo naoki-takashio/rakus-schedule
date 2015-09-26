@@ -1,5 +1,5 @@
 $(function() {
-	$('#dialogTaskCreate,#dialogTaskEdit,#dialogTaskDisp' ).dialog({
+	$('#dialogTaskCreate,#dialogTaskEdit,#dialogTaskDisp,#dialogTaskStatusChange' ).dialog({
 		autoOpen : false,
 	});
 	$('#btnTaskCreate').click( function() {
@@ -64,7 +64,6 @@ function getTaskEdit(obj) {
 			<div>Date Start</div>\
 			<div>Date End</div>\
 			<div>Descriptions</div>\
-			<div>Comment</div>\
 		</div>\
 		<div id="dialogContentsRight">\
 				<div><input type="text" name="taskName" value="' + obj.taskName +'"></div>\
@@ -78,7 +77,7 @@ function getTaskEdit(obj) {
 				<div><input type="date" name="anticipatedCommencementDate" value="' + obj.anticipatedCommencementDate +'"></div>\
 				<div><input type="date" name="expectedCompletionDate" value="' + obj.expectedCompletionDate +'"></div>\
 				<div><textarea name="taskContent" id="taskContent">' + obj.taskContent +'</textarea></div>\
-				<div>' + obj.comment +'</div>\
+				<input type="hidden" name="taskId" value="' + obj.taskId +'">\
 				<input type="hidden" name="orderNo" value="0">\
 		</div>\
 		<a href="javascript:taskEdit();" id="btnSave">SAVE</a>\
@@ -114,5 +113,21 @@ function getTaskDisp(obj) {
 			<div>' + obj.taskContent +'</div>\
 			<input type="hidden" name="orderNo" value="0">\
 	</div>';
+	return taskContent;
+};
+//並び替えコメントダイアログ
+function getTaskStatusChange(obj) {
+	var taskContent = '<form id="formTaskStatusChange" action="javascript:void(0);" method="POST">\
+		<div id="dialogContentsLeft">\
+			<div>Task Name</div>\
+			<div>Comment</div>\
+		</div>\
+		<div id="dialogContentsRight">\
+				<div><input type="text" name="taskName" value="' + obj.taskName +'"></div>\
+				<div><textarea name="comment" id="taskContent" placeholder="入力してください"></textarea></div>\
+				<input type="hidden" name="taskId" value="' + obj.taskId +'">\
+		</div>\
+		<a href="javascript:taskStatusChange();" id="btnSave">SAVE</a>\
+	</form>';
 	return taskContent;
 };
