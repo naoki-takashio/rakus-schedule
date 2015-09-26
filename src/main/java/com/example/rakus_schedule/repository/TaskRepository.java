@@ -27,10 +27,6 @@ public class TaskRepository {
 	
 	@Autowired
 	private taskSqlUtil taskSqlUtil;
-	
-	@Autowired
-	private CommentRepository commentRepository;
-	
 
 	public static final RowMapper<Task> TASK_ROW_MAPPER = (rs, i) -> {
 		Task task = new Task();

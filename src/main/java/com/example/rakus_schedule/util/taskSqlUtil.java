@@ -103,6 +103,8 @@ public class taskSqlUtil {
 		updateTasksSql.append("	,completion_date = :completionDate");
 		updateTasksSql.append("WHERE");
 		updateTasksSql.append("	task_id = :taskId");
+		updateTasksSql.append("	AND");
+		updateTasksSql.append("	deleted_flg is false");
 		updateTasksSql.append(";");
 		return updateTasksSql.toString();
 	}
@@ -119,6 +121,8 @@ public class taskSqlUtil {
 		deleteTasksSql.append("	deleted_flg = true");
 		deleteTasksSql.append("WHERE");
 		deleteTasksSql.append("	task_id = :taskId");
+		deleteTasksSql.append("	AND");
+		deleteTasksSql.append("	deleted_flg = false");
 		deleteTasksSql.append(";");
 		return deleteTasksSql.toString();
 	}

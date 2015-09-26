@@ -38,24 +38,6 @@ public class CommentSqlUtil {
 		InsertCommentsSql.append(";");
 		return InsertCommentsSql.toString();
 	}
-
-	/**
-	 * アクティブなコメントで尚且つ、task_idを条件に抽出するsql文
-	 * @return アクティブなコメントで尚且つ、task_idを条件に抽出するsql文
-	 */
-	public String getActiveCommentssAndFindByIDSql(){
-		StringBuilder activeCommentssAndFindByIDSql = new StringBuilder();
-		activeCommentssAndFindByIDSql.append("SELECT");
-		activeCommentssAndFindByIDSql.append("	comment_content");
-		activeCommentssAndFindByIDSql.append("FROM");
-		activeCommentssAndFindByIDSql.append("	comments");
-		activeCommentssAndFindByIDSql.append("WHERE");
-		activeCommentssAndFindByIDSql.append("	task_id = 1");
-		activeCommentssAndFindByIDSql.append("	AND");
-		activeCommentssAndFindByIDSql.append("	deleted_flg = false	");
-		activeCommentssAndFindByIDSql.append(";");
-		return activeCommentssAndFindByIDSql.toString();
-	}
 	
 	
 }
