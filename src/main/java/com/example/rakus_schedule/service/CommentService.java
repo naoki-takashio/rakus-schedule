@@ -24,8 +24,4 @@ public class CommentService {
 	public void commentsInsert(Comment comment){
 		commentRepository.commentsInsert(comment);
 	}
-	
-	
-	
-
 }

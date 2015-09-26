@@ -14,7 +14,7 @@ public class CommentSqlUtil {
 	 * commentsテーブルに登録するsql文を返すメソッド
 	 * @return Commentsテーブルに登録するINSERT文
 	 */
-	public String getInsertCommentsSql(){
+	public String getInsertCommentsSql() {
 		StringBuilder InsertCommentsSql = new StringBuilder();
 		InsertCommentsSql.append("INSERT INTO");
 		InsertCommentsSql.append("	comments");
@@ -38,6 +38,4 @@ public class CommentSqlUtil {
 		InsertCommentsSql.append(";");
 		return InsertCommentsSql.toString();
 	}
-	
-	
 }

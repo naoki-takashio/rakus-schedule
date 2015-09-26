@@ -48,7 +48,7 @@ public class TaskService {
 		List<Task> doneTaskList = new ArrayList<Task>();
 
 		/* アクティブなタスクを一旦取得 */
-		List<Task> temporarilyTaskList = taskRepository.getActivefindAll();
+		List<Task> temporarilyTaskList = taskRepository.getActivefindAllTasks();
 
 		/* 取得したタスクリストをtask_status毎に分ける */
 		for (Task task : temporarilyTaskList) {
@@ -88,23 +88,22 @@ public class TaskService {
 	 * @param task
 	 */
 	public void createTask(Task task) {
-		taskRepository.updateOrderNoForStandByAndInsertTask(task);
+		taskRepository.updateOrderNoForStandByAndInsertTasks(task);
 	}
 	
 	/**
 	 * tasksテーブルを更新するメソッド
 	 * @param task
 	 */
-	public void taskUpdate(Task task){
-		taskRepository.taskEdit(task);
+	public void editTasks(Task task) {
+		taskRepository.editTasks(task);
 	}
 	
 	/**
 	 * tasksテーブルを論理削除するメソッド
 	 * @param task
 	 */
-	public void taskDelete(Task task){
-		taskRepository.taskDelete(task);
+	public void deleteTasks(Task task) {
+		taskRepository.deleteTasks(task);
 	}
-	
 }

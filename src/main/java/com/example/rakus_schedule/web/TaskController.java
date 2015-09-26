@@ -5,13 +5,12 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.rakus_schedule.domain.Comment;
 import com.example.rakus_schedule.domain.Task;
@@ -57,7 +56,7 @@ public class TaskController {
 	public String top(Model model) {
 		List<Object> allTaskList = taskService.kanbanView();
 		// 動作確認用のテストデータ。DB環境構築できてない人はこっちを使う。
-		//List<Object> allTaskList = createTestTaskData.createTestTaskList();
+		// List<Object> allTaskList = createTestTaskData.createTestTaskList();
 		model.addAttribute("allTaskList", allTaskList);
 		return "top";
 	}
@@ -72,12 +71,7 @@ public class TaskController {
 	 * @return model 一覧表示画面
 	 */
 	@RequestMapping(value = "create")
-	public String create(@Validated TaskForm form, BindingResult result,
-			Model model) {
-		// formでの入力値チェックはひとまず置いとく。JS側への戻し方わからん。
-		// if(result.hasErrors()){
-		// return null;
-		// }
+	public String create(@Validated TaskForm form, Model model) {
 		Task task = new Task();
 		BeanUtils.copyProperties(form, task);
 		taskService.createTask(task);
@@ -89,15 +83,16 @@ public class TaskController {
 	 * @param model
 	 * @return トップ画面
 	 */
+	@Transactional
 	@RequestMapping(value = "edit", method = RequestMethod.POST)
-	public String taskEdit(@Validated TaskForm taskform, CommentForm commentForm, 
-							BindingResult result, Model model) {
+	public String editTasks(@Validated TaskForm taskForm, CommentForm commentForm, 
+						Model model) {
 		Task task = new Task();
 		Comment comment = new Comment();
-		BeanUtils.copyProperties(taskform, task);
+		BeanUtils.copyProperties(taskForm, task);
 		BeanUtils.copyProperties(commentForm, comment);
 		/* tasksテーブルを更新する */
-		taskService.taskUpdate(task);
+		taskService.editTasks(task);
 		/* commentsテーブルに登録する */
 		commentService.commentsInsert(comment);
 		return top(model);
@@ -110,11 +105,10 @@ public class TaskController {
 	 * @return トップ画面
 	 */
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
-	public String taskDelete(TaskForm taskform, Model model){
+	public String deleteTasks(TaskForm taskForm, Model model) {
 		Task task = new Task();
-		BeanUtils.copyProperties(taskform, task);
-		taskService.taskDelete(task);
+		BeanUtils.copyProperties(taskForm, task);
+		taskService.deleteTasks(task);
 		return top(model);
-	}
-	
+	}	
 }
