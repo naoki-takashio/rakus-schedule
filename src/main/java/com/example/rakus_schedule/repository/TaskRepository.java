@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -96,54 +97,46 @@ public class TaskRepository {
 		jdbcTemplate.update(insertTasksSql, param);
 	}
 
-	// /**
-	// * tasksテーブルのtask_statusを更新するメソッド 何がどう更新されたかが、サーバーサイドではわからない
-	// * オブジェクトを取得し、全て更新というのが良い気がする flgとかは分かるけど。。。editの場合はわからない。
-	// *
-	// * @param task
-	// * @return
-	// */
-	// public String update(Task task){
-	// // String taskStatusUpdateSql =
-	// "update tasks set task_status = :taskStatus where id = :id";
-	// // String completionFlgUpdateSql =
-	// "update tasks set task_status = :taskStatus ,completion_flg = :completionFlg where id = :id";
-	// String deleteFlgUpdateSql =
-	// "UPDATE tasks SET deleted_flg = :deleteFlg where id = :id";
-	// SqlParameterSource param = new MapSqlParameterSource()
-	// .addValue("id", task.getTask_id()).addValue("status",
-	// task.getTask_status());
-	// jdbcTemplate.update(sql, param);
-	//
-	// //Viewで削除された場合はdelete_flgを論理削除する
-	// if(task.getDelet == true){
-	// if(task.getDeletedFlg() = 1){
-	// SqlParameterSource param = new MapSqlParameterSource()
-	// .addValue("id", task.getTask_id()).addValue("deleteFlg",
-	// task.getDeletedFlg());
-	// jdbcTemplate.update(sql, param);
-	// }
-	//
-	// /**
-	// * task編集時に、動くメソッド。
-	// * :parameterとかはまだ入れていない
-	// * @param task
-	// * @return
-	// */
-	// public String edit(Task task){
-	// String editSql =
-	// "UPDATE tasks SET task_name = :task_name, task_detail, priority,"
-	// +
-	// " progress, tag, created_at, creator_id, engineer_id, project_id, updated_at, "
-	// +
-	// "anticipated_commencement_date, expected_completion_date, commencement_date, "
-	// + "finish_date, completion_date, completion_flg, deleted_flg, deleted_at"
-	// ;
-	//
-	// SqlParameterSource param = new MapSqlParameterSource()
-	// .addValue("id", task.getTask_id()).addValue("deleteFlg",
-	// task.getDeletedFlg());
-	// jdbcTemplate.update(sql, param);
-	//
-	// }
+	/**
+	 * 移動前のステータス列の並べ替え.
+	 * 
+	 * @param beforeOrderTask
+	 */
+	public void updateBeforeOrderTask(Integer[] beforeOrderTask) {
+
+		Integer orderNo = 0;
+		for (Integer taskId : beforeOrderTask) {
+			SqlParameterSource param = new MapSqlParameterSource().addValue(
+					"taskId", taskId).addValue("orderNo", orderNo);
+			jdbcTemplate.update(taskSqlUtil.updateOrderTaskSql(), param);
+			orderNo++;
+		}
+	}
+
+	/**
+	 * 移動したタスクのステータス更新.
+	 * 
+	 * @param taskId
+	 * @param taskStatus
+	 */
+	public void updateStatus(Integer taskId, Integer taskStatus) {
+		SqlParameterSource param = new MapSqlParameterSource().addValue(
+				"taskId", taskId).addValue("taskStatus", taskStatus);
+		jdbcTemplate.update(taskSqlUtil.updateStatus(), param);
+	}
+
+	/**
+	 * 移動後のステータス列の並び替え.
+	 * 
+	 * @param afterOrderTask
+	 */
+	public void updateAfterOrderTask(Integer[] afterOrderTask) {
+
+		Integer orderNo = 0;
+		for (Integer taskId : afterOrderTask) {
+			SqlParameterSource param = new MapSqlParameterSource().addValue(
+					"taskId", taskId).addValue("orderNo", orderNo);
+			jdbcTemplate.update(taskSqlUtil.updateOrderTaskSql(), param);
+		}
+	}
 }

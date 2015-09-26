@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.rakus_schedule.domain.OrderTask;
 import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.service.CreateTestTaskData;
 import com.example.rakus_schedule.service.TaskService;
@@ -22,12 +23,17 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 
-	@Autowired
-	private CreateTestTaskData createTestTaskData;
+	// @Autowired
+	// private CreateTestTaskData createTestTaskData;
 
 	@ModelAttribute
 	public TaskForm setUpForm() {
 		return new TaskForm();
+	}
+
+	@ModelAttribute
+	public OrderTaskForm setupform() {
+		return new OrderTaskForm();
 	}
 
 	/**
@@ -46,17 +52,14 @@ public class TaskController {
 	}
 
 	/**
-	 * 新規タスクをDBに登録する。 タイトルと開始日に対するvalidateがあり formクラスで、validateは行う
+	 * 新規タスクをDBに登録する. タイトルと開始日に対するvalidateがあり formクラスで、validateは行う.
 	 * 
 	 * @param form
 	 *            入力パラメーター
-	 * @param result
-	 *            入力値チェック
 	 * @return model 一覧表示画面
 	 */
 	@RequestMapping(value = "create")
-	public String create(@Validated TaskForm form, BindingResult result,
-			Model model) {
+	public String create(@Validated TaskForm form, Model model) {
 		Task task = new Task();
 		BeanUtils.copyProperties(form, task);
 
@@ -64,41 +67,20 @@ public class TaskController {
 		return top(model);
 	}
 
-	// /**
-	// * タスクステータスを更新する。画面上で、タスクをドラッグした場合。 javascriptで制御しているので、return
-	// index()は行わない
-	// * どのタスクが更新されたかが分かる必要がある。 送られる値はtasl_idと、task_statusだけ？ボス次第
-	// *
-	// * @param model
-	// */
-	// @RequestMapping(params = "statusUpdate", method = RequestMethod.GET)
-	// public void taskStatusUpdate(TaskRegistrationForm form, Model model) {
-	// Task task = new Task();
-	// BeanUtils.copyProperties(form, task);
-	// taskRepository.update(task);
-	// }
-	//
-	// /**
-	// * ステータスを更新する。 どのタスクが更新されたかが分かる必要がある。 送られる値はtasl_idと、task_statusだけ？ボス次第
-	// *
-	// * @param model
-	// */
-	// @RequestMapping(params = "statusUpdate", method = RequestMethod.GET)
-	// public void statusUpdate(TaskRegistrationForm form, Model model) {
-	// Task task = new Task();
-	// BeanUtils.copyProperties(form, task);
-	// taskRepository.update(task);
-	// }
-	//
-	// /**
-	// * タスク編集を行う。 送られる値はtasl_idと、task_statusだけ？ボス次第
-	// *
-	// * @param model
-	// */
-	// @RequestMapping(params = "edit", method = RequestMethod.POST)
-	// public void edit(TaskRegistrationForm form, Model model) {
-	// Task task = new Task();
-	// BeanUtils.copyProperties(form, task);
-	// taskRepository.update(task);
-	// }
+	/**
+	 * タスク並べ替えを行う.
+	 * 
+	 * @param form
+	 *            入力パラメータ
+	 * @param model
+	 *            一覧画面表示
+	 * @return
+	 */
+	@RequestMapping(value = "orderupdate")
+	public void orderupdate(@Validated OrderTaskForm form, Model model) {
+		OrderTask orderTask = new OrderTask();
+		BeanUtils.copyProperties(form, orderTask);
+
+		taskService.orderTask(orderTask);
+	}
 }

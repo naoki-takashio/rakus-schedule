@@ -134,4 +134,30 @@ public class taskSqlUtil {
 
 	}
 
+	public String updateOrderTaskSql() {
+		StringBuilder updateOrderTaskSql = new StringBuilder();
+		updateOrderTaskSql.append("UPDATE");
+		updateOrderTaskSql.append("	tasks");
+		updateOrderTaskSql.append("	SET");
+		updateOrderTaskSql.append("	order_no =");
+		updateOrderTaskSql.append("	:orderNO");
+		updateOrderTaskSql.append("	WHERE");
+		updateOrderTaskSql.append("	task_id =");
+		updateOrderTaskSql.append("	:taskId;");
+		return updateOrderTaskSql.toString();
+	}
+
+	public String updateStatus() {
+		StringBuilder updateStatusSql = new StringBuilder();
+		updateStatusSql.append("UPDATE");
+		updateStatusSql.append("	tasks");
+		updateStatusSql.append("	SET");
+		updateStatusSql.append("	task_status =");
+		updateStatusSql.append("	:taskStatus");
+		updateStatusSql.append("	WHERE");
+		updateStatusSql.append("	task_id =");
+		updateStatusSql.append("	:taskId;");
+		return updateStatusSql.toString();
+	}
+
 }

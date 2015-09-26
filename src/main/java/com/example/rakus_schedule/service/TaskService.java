@@ -2,8 +2,12 @@ package com.example.rakus_schedule.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.rakus_schedule.domain.OrderTask;
 import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.repository.TaskRepository;
 
@@ -90,5 +94,24 @@ public class TaskService {
 	 */
 	public void createTask(Task task) {
 		taskRepository.updateOrderNoForStandByAndInsertTask(task);
+	}
+	
+	/**
+	 * タスク並び替えを呼び出すサービスメソッド.
+	 * @param orderTask
+	 */
+	@Transactional
+	public void orderTask(OrderTask orderTask) {
+		
+		//移動前のステータスにタスクが残っていれば並び順を更新する
+		if( orderTask.getBeforeOrderTask() != null) {
+		taskRepository.updateBeforeOrderTask(orderTask.getBeforeOrderTask());
+		}
+		
+		//移動するタスクのステータス更新
+		taskRepository.updateStatus(orderTask.getTaskId(), orderTask.getAfterStatus());
+		
+		//移動後のステータス列の並び順を更新する
+		taskRepository.updateAfterOrderTask(orderTask.getAfterOrderTask());
 	}
 }

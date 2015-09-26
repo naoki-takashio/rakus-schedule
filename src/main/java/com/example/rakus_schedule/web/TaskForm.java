@@ -124,4 +124,5 @@ public class TaskForm {
 	 * コメント
 	 */
 	private List<String> comment;
+
 }

@@ -106,4 +106,5 @@ public class Task {
 	 * コメント
 	 */
 	private List<String> comment;
+	
 }
