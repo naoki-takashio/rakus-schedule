@@ -9,7 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author ttanaka タスクのドメイン
+ * タスクのドメイン
+ * @author ttanaka
  */
 @Data
 @AllArgsConstructor
@@ -20,6 +21,7 @@ public class Task {
 	 * タスクID
 	 */
 	private Integer taskId;
+	
 	/**
 	 * タスク名
 	 */
@@ -44,10 +46,12 @@ public class Task {
 	 * 優先度
 	 */
 	private String priority;
+	
 	/**
 	 * 進捗度
 	 */
 	private Integer progress;
+	
 	/**
 	 * タグ
 	 */
@@ -57,46 +61,57 @@ public class Task {
 	 * 作成日時
 	 */
 	private Timestamp createdAt;
+
 	/**
 	 * 作成者ID
 	 */
 	private Integer creatorId;
+	
 	/**
 	 * 担当者ID
 	 */
 	private Integer engineerId;
+	
 	/**
 	 * プロジェクトID
 	 */
 	private Integer projectId;
+	
 	/**
 	 * 更新日時
 	 */
 	private Timestamp updatedAt;
+	
 	/**
 	 * 開始予定日
 	 */
 	private Date anticipatedCommencementDate;
+	
 	/**
 	 * 終了予定日
 	 */
 	private Date expectedCompletionDate;
+	
 	/**
 	 * 開始日
 	 */
 	private Date commecementDate;
+	
 	/**
 	 * 終了日
 	 */
 	private Date finishDate;
+	
 	/**
 	 * 完了日
 	 */
 	private Date completionDate;
+	
 	/**
 	 * 完了フラグ
 	 */
 	private boolean completionFlg;
+	
 	/**
 	 * 削除フラグ
 	 */
@@ -105,5 +120,6 @@ public class Task {
 	/**
 	 * コメント
 	 */
-	private List<String> comment;
+	private List<Comment> commentList;
+	
 }

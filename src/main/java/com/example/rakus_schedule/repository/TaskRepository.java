@@ -5,14 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.rakus_schedule.domain.Comment;
 import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.util.taskSqlUtil;
 
+/**
+ * tasksテーブルを直接操作するクラス
+ * @author miyaharashuusaku
+ *
+ */
 @Repository
 public class TaskRepository {
 
@@ -35,8 +42,6 @@ public class TaskRepository {
 		task.setCreatorId(rs.getInt("creator_id"));
 		task.setEngineerId(rs.getInt("engineer_id"));
 		task.setProjectId(rs.getInt("project_id"));
-		task.setAnticipatedCommencementDate(rs
-				.getDate("anticipated_commencement_date"));
 		task.setUpdatedAt(rs.getTimestamp("updated_at"));
 		task.setAnticipatedCommencementDate(rs
 				.getDate("anticipated_commencement_date"));
@@ -56,7 +61,7 @@ public class TaskRepository {
 	 * 
 	 * @return 全てのタスクリスト
 	 */
-	public List<Task> findAll() {
+	public List<Task> findAllTasks() {
 		String allTaskSql = taskSqlUtil.getFindAllSql();
 		List<Task> allTaskList = jdbcTemplate
 				.query(allTaskSql, TASK_ROW_MAPPER);
@@ -68,7 +73,7 @@ public class TaskRepository {
 	 * 
 	 * @return アクティブな全てのタスクリスト
 	 */
-	public List<Task> getActivefindAll() {
+	public List<Task> getActivefindAllTasks() {
 		String allActiveTaskSql = taskSqlUtil.getActiveFindAllSql();
 		List<Task> allActiveTaskList = jdbcTemplate.query(allActiveTaskSql,
 				TASK_ROW_MAPPER);
@@ -79,11 +84,10 @@ public class TaskRepository {
 	 * 新規タスクを作成された際、DBにその情報を登録するメソッド.
 	 * 登録前にタスクの並び順を担保するため既に登録されているカラムのorder_noをupdateする.
 	 * 
-	 * @param task
-	 *            新規登録するタスク
+	 * @param task 新規登録するタスク
 	 */
 	@Transactional
-	public void updateOrderNoForStandByAndInsertTask(Task task) {
+	public void updateOrderNoForStandByAndInsertTasks(Task task) {
 
 		String updateOrderNoForStandBySql = taskSqlUtil
 				.updateOrderNoForStandBySql();
@@ -96,54 +100,39 @@ public class TaskRepository {
 		jdbcTemplate.update(insertTasksSql, param);
 	}
 
-	// /**
-	// * tasksテーブルのtask_statusを更新するメソッド 何がどう更新されたかが、サーバーサイドではわからない
-	// * オブジェクトを取得し、全て更新というのが良い気がする flgとかは分かるけど。。。editの場合はわからない。
-	// *
-	// * @param task
-	// * @return
-	// */
-	// public String update(Task task){
-	// // String taskStatusUpdateSql =
-	// "update tasks set task_status = :taskStatus where id = :id";
-	// // String completionFlgUpdateSql =
-	// "update tasks set task_status = :taskStatus ,completion_flg = :completionFlg where id = :id";
-	// String deleteFlgUpdateSql =
-	// "UPDATE tasks SET deleted_flg = :deleteFlg where id = :id";
-	// SqlParameterSource param = new MapSqlParameterSource()
-	// .addValue("id", task.getTask_id()).addValue("status",
-	// task.getTask_status());
-	// jdbcTemplate.update(sql, param);
-	//
-	// //Viewで削除された場合はdelete_flgを論理削除する
-	// if(task.getDelet == true){
-	// if(task.getDeletedFlg() = 1){
-	// SqlParameterSource param = new MapSqlParameterSource()
-	// .addValue("id", task.getTask_id()).addValue("deleteFlg",
-	// task.getDeletedFlg());
-	// jdbcTemplate.update(sql, param);
-	// }
-	//
-	// /**
-	// * task編集時に、動くメソッド。
-	// * :parameterとかはまだ入れていない
-	// * @param task
-	// * @return
-	// */
-	// public String edit(Task task){
-	// String editSql =
-	// "UPDATE tasks SET task_name = :task_name, task_detail, priority,"
-	// +
-	// " progress, tag, created_at, creator_id, engineer_id, project_id, updated_at, "
-	// +
-	// "anticipated_commencement_date, expected_completion_date, commencement_date, "
-	// + "finish_date, completion_date, completion_flg, deleted_flg, deleted_at"
-	// ;
-	//
-	// SqlParameterSource param = new MapSqlParameterSource()
-	// .addValue("id", task.getTask_id()).addValue("deleteFlg",
-	// task.getDeletedFlg());
-	// jdbcTemplate.update(sql, param);
-	//
-	// }
+	/**
+	 * tasksテーブルを更新するメソッド
+	 * taskIdを条件に、受け取ったパラメーターを全て更新する
+	 * @param task
+	 */
+	public void editTasks(Task task) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
+		
+//		SqlParameterSource param = new MapSqlParameterSource()
+//				.addValue("taskId", task.getTaskId())
+//				.addValue("taskName", task.getTaskName())
+//				.addValue("taskStatus", task.getTaskStatus())
+//				.addValue("orderNo", task.getOrderNo())
+//				.addValue("priority", task.getPriority())
+//				.addValue("progress", task.getProgress())
+//				.addValue("anticipatedCommencementDate", 
+//							task.getAnticipatedCommencementDate())
+//				.addValue("expectedCompletionDate", task.getExpectedCompletionDate())
+//				.addValue("commecementDate", task.getCommecementDate())
+//				.addValue("finishDate", task.getFinishDate())
+//				.addValue("completionDate", task.getCommecementDate());
+				
+		jdbcTemplate.update(taskSqlUtil.getUpdateTasksSql(), param);
+	}
+
+	/**
+	 * tasksテーブルを論理削除するメソッド
+	 * @param task
+	 */
+	public void deleteTasks(Task task) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
+//		SqlParameterSource param = new MapSqlParameterSource()
+//				.addValue("taskId", task.getTaskId());
+		jdbcTemplate.update(taskSqlUtil.getDeleteTasksSql(), param);
+	}
 }
