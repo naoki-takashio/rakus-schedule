@@ -9,8 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author ttanaka
  * タスクのドメイン
+ * @author ttanaka
  */
 @Data
 @AllArgsConstructor
@@ -106,5 +106,6 @@ public class Task {
 	/**
 	 * コメント
 	 */
-	private List<String> comment;
+	private List<Comment> commentList;
+	
 }

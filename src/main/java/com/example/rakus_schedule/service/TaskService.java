@@ -8,8 +8,7 @@ import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.repository.TaskRepository;
 
 /**
- * TaskRepositoryで取得したデータを加工するサービスクラス
- * 
+ * Tasksテーブルに関するサービスクラス
  * @author miyaharashuusaku
  *
  */
@@ -36,13 +35,13 @@ public class TaskService {
 		// 全ての「タスクリスト」を格納するリスト
 		List<Object> allTaskList = new ArrayList<Object>();
 
-		// task_statusがstandByのものを格納するリスト
+		// task_statusがStandByのものを格納するリスト
 		List<Task> standByTaskList = new ArrayList<Task>();
 
-		// task_statusがworlingのものを格納するリスト
+		// task_statusがWorkingのものを格納するリスト
 		List<Task> workingTaskList = new ArrayList<Task>();
 
-		// task_statusがin Reviewのものを格納するリスト
+		// task_statusがIn Reviewのものを格納するリスト
 		List<Task> inReviewTaskList = new ArrayList<Task>();
 
 		// task_statusがDoneのものを格納するリスト
@@ -91,4 +90,21 @@ public class TaskService {
 	public void createTask(Task task) {
 		taskRepository.updateOrderNoForStandByAndInsertTask(task);
 	}
+	
+	/**
+	 * tasksテーブルを更新するメソッド
+	 * @param task
+	 */
+	public void taskUpdate(Task task){
+		taskRepository.taskEdit(task);
+	}
+	
+	/**
+	 * tasksテーブルを論理削除するメソッド
+	 * @param task
+	 */
+	public void taskDelete(Task task){
+		taskRepository.taskDelete(task);
+	}
+	
 }

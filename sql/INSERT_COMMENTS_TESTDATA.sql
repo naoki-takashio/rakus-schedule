@@ -1,0 +1,20 @@
+INSERT INTO
+	comments
+	(
+	comment_content
+	,creator_id
+	,created_at
+	,task_id
+	,updated_at
+	,deleted_flg
+	)
+	values
+	(
+	'てすと'
+	,1
+	,CURRENT_TIMESTAMP
+	,1
+	,CURRENT_TIMESTAMP
+	,false
+	)
+;

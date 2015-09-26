@@ -3,7 +3,7 @@ package com.example.rakus_schedule.util;
 import org.springframework.stereotype.Component;
 
 /**
- * 別クラスから呼び出されるsql文専用のクラス
+ * tasksテーブルに関するsql文を保管するクラス
  * @author miyaharashuusaku
  *	
  */
@@ -15,32 +15,32 @@ public class taskSqlUtil {
 	 * @return 全てのデータを取得するsql
 	 */
 	public String getFindAllSql(){
-		StringBuilder allaskSql = new StringBuilder();
-		allaskSql.append("SELECT");
-		allaskSql.append("	task_id");
-		allaskSql.append("	,task_name");
-		allaskSql.append("	,task_status");
-		allaskSql.append("	,task_content");
-		allaskSql.append("	,order_no");
-		allaskSql.append("	,priority");
-		allaskSql.append("	,progress");
-		allaskSql.append("	,tag");
-		allaskSql.append("	,creator_id");
-		allaskSql.append("	,engineer_id");
-		allaskSql.append("	,project_id");
-		allaskSql.append("	,anticipated_commencement_date");
-		allaskSql.append("	,expected_completion_date");
-		allaskSql.append("	,commencement_date");
-		allaskSql.append("	,finish_date");
-		allaskSql.append("	,completion_date");
-		allaskSql.append("	,completion_flg");
-		allaskSql.append("	,created_at");
-		allaskSql.append("	,updated_at");
-		allaskSql.append("	,deleted_flg");
-		allaskSql.append("FROM");
-		allaskSql.append("	tasks");
+		StringBuilder allTaskSql = new StringBuilder();
+		allTaskSql.append("SELECT");
+		allTaskSql.append("	task_id");
+		allTaskSql.append("	,task_name");
+		allTaskSql.append("	,task_status");
+		allTaskSql.append("	,task_content");
+		allTaskSql.append("	,order_no");
+		allTaskSql.append("	,priority");
+		allTaskSql.append("	,progress");
+		allTaskSql.append("	,tag");
+		allTaskSql.append("	,creator_id");
+		allTaskSql.append("	,engineer_id");
+		allTaskSql.append("	,project_id");
+		allTaskSql.append("	,anticipated_commencement_date");
+		allTaskSql.append("	,expected_completion_date");
+		allTaskSql.append("	,commencement_date");
+		allTaskSql.append("	,finish_date");
+		allTaskSql.append("	,completion_date");
+		allTaskSql.append("	,completion_flg");
+		allTaskSql.append("	,created_at");
+		allTaskSql.append("	,updated_at");
+		allTaskSql.append("	,deleted_flg");
+		allTaskSql.append("FROM");
+		allTaskSql.append("	tasks");
 		
-		return allaskSql.toString();
+		return allTaskSql.toString();
 	}
 
 	/**
@@ -68,19 +68,60 @@ public class taskSqlUtil {
 		allActiveTaskSql.append("	,completion_date");
 		allActiveTaskSql.append("	,created_at");
 		allActiveTaskSql.append("	,updated_at");
-		allActiveTaskSql.append("	FROM");
+		allActiveTaskSql.append("FROM");
 		allActiveTaskSql.append("	tasks");
-		allActiveTaskSql.append("	WHERE");
-		allActiveTaskSql.append("	completion_flg is not true");
+		allActiveTaskSql.append("WHERE");
+		allActiveTaskSql.append("	completion_flg is false");
 		allActiveTaskSql.append("	AND");
-		allActiveTaskSql.append("	deleted_flg is not true");
-		allActiveTaskSql.append("	ORDER BY");
+		allActiveTaskSql.append("	deleted_flg is false");
+		allActiveTaskSql.append("ORDER BY");
 		allActiveTaskSql.append("	order_no;");
 		
 		return allActiveTaskSql.toString();
 	}
 	
     
+	/**
+	 * tasksテーブルを更新するsqlを返すメソッド
+	 * @return tasksテーブルを更新するsql
+	 */
+	public String getUpdateTasksSql(){
+		StringBuilder updateTasksSql = new StringBuilder();
+		updateTasksSql.append("UPDATE");
+		updateTasksSql.append("	tasks");
+		updateTasksSql.append("SET");
+		updateTasksSql.append("	task_name = :taskName");
+		updateTasksSql.append("	,task_status = :taskStatus");
+		updateTasksSql.append("	,order_no = :orderNo");
+		updateTasksSql.append("	,priority = :priority");
+		updateTasksSql.append("	,progress = :progress");
+		updateTasksSql.append("	,updated_at = CURRENT_TIMESTAMP");
+		updateTasksSql.append("	,anticipated_commencement_date = :anticipatedCommencementDate");
+		updateTasksSql.append("	,expected_completion_date = :expectedCompletionDate");
+		updateTasksSql.append("	,commencement_date = :commecementDate");
+		updateTasksSql.append("	,finish_date = :finishDate");
+		updateTasksSql.append("	,completion_date = :completionDate");
+		updateTasksSql.append("WHERE");
+		updateTasksSql.append("	task_id = :taskId");
+		updateTasksSql.append(";");
+		return updateTasksSql.toString();
+	}
 
-
+	/**
+	 * 削除フラグを更新(論理削除)するsql文を取得するメソッド
+	 * @return 削除フラグを更新(論理削除)するsql文
+	 */
+	public String getDeleteTasksSql(){
+		StringBuilder deleteTasksSql = new StringBuilder();
+		deleteTasksSql.append("UPDATE");
+		deleteTasksSql.append("	tasks");
+		deleteTasksSql.append("SET");
+		deleteTasksSql.append("	deleted_flg = true");
+		deleteTasksSql.append("WHERE");
+		deleteTasksSql.append("	task_id = :taskId");
+		deleteTasksSql.append(";");
+		return deleteTasksSql.toString();
+	}
 }
+
+

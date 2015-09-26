@@ -5,5 +5,5 @@ creator_id	integer	not null,
 task_id	integer,
 created_at	timestamp(3)	not null,
 updated_at timestamp(3)	not null,
-delated_flg	boolean	not null
+deleted_flg	boolean	not null
 )
