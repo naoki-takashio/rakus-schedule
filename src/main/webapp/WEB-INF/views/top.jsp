@@ -134,9 +134,15 @@ function viewTaskDisp(taskId){
     	connectWith:'.listStatus',
    		cursor:'move',
    		update:function(evt, ui) {
-   			var te = $(this).sortable('toArray');
-   			alert(te);
-   			alert($(evt.target).attr('id'));
+			if (this === ui.item.parent()[0]) {
+				var data = {
+					beforeOrderTask : $(ui.sender).attr('id')?$(ui.sender).sortable('toArray'):'',
+					afterOrderTask : $(this).sortable('toArray'),
+					afterStatus : $(evt.target).attr('id').replace('status', ''),
+					taskId : $(ui.item).attr('id')
+				};
+				taskOrderupdate(data);
+			}
    		}
     });
     $('.listStatus').disableSelection();
@@ -162,6 +168,18 @@ function taskEdit(){
     	url: "/kanban/edit",
     	type: "POST",
     	data: form
+	}).done(function(data){
+		window.location.href = '/kanban';
+	}).fail(function(data){
+    	alert('error!');
+	})
+}
+//タスク並び替え
+function taskOrderupdate(data){
+	$.ajax({
+    	url: "/kanban/orderupdate",
+    	type: "POST",
+    	data: data
 	}).done(function(data){
 		window.location.href = '/kanban';
 	}).fail(function(data){
