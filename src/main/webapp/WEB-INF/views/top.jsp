@@ -133,12 +133,10 @@ function viewTaskDisp(taskId){
     $('.listStatus').sortable({
     	connectWith:'.listStatus',
    		cursor:'move',
-   		start : function(evt, ui) {
-   			console.log(evt[0]);
-   		},
    		update:function(evt, ui) {
    			var te = $(this).sortable('toArray');
    			alert(te);
+   			alert($(evt.target).attr('id'));
    		}
     });
     $('.listStatus').disableSelection();
