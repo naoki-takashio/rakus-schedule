@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 /**
- * @author ttanaka タスクのフォーム
+ * tasksテーブルのフォーム
+ * @author ttanaka
+ * 
  */
 @Data
 @AllArgsConstructor

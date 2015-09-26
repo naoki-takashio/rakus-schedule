@@ -12,8 +12,7 @@ import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.repository.TaskRepository;
 
 /**
- * TaskRepositoryで取得したデータを加工するサービスクラス
- * 
+ * Tasksテーブルに関するサービスクラス
  * @author miyaharashuusaku
  *
  */
@@ -40,20 +39,20 @@ public class TaskService {
 		// 全ての「タスクリスト」を格納するリスト
 		List<Object> allTaskList = new ArrayList<Object>();
 
-		// task_statusがstandByのものを格納するリスト
+		// task_statusがStandByのものを格納するリスト
 		List<Task> standByTaskList = new ArrayList<Task>();
 
-		// task_statusがworlingのものを格納するリスト
+		// task_statusがWorkingのものを格納するリスト
 		List<Task> workingTaskList = new ArrayList<Task>();
 
-		// task_statusがin Reviewのものを格納するリスト
+		// task_statusがIn Reviewのものを格納するリスト
 		List<Task> inReviewTaskList = new ArrayList<Task>();
 
 		// task_statusがDoneのものを格納するリスト
 		List<Task> doneTaskList = new ArrayList<Task>();
 
 		/* アクティブなタスクを一旦取得 */
-		List<Task> temporarilyTaskList = taskRepository.getActivefindAll();
+		List<Task> temporarilyTaskList = taskRepository.getActivefindAllTasks();
 
 		/* 取得したタスクリストをtask_status毎に分ける */
 		for (Task task : temporarilyTaskList) {
@@ -93,7 +92,23 @@ public class TaskService {
 	 * @param task
 	 */
 	public void createTask(Task task) {
-		taskRepository.updateOrderNoForStandByAndInsertTask(task);
+		taskRepository.updateOrderNoForStandByAndInsertTasks(task);
+	}
+	
+	/**
+	 * tasksテーブルを更新するメソッド
+	 * @param task
+	 */
+	public void editTasks(Task task) {
+		taskRepository.editTasks(task);
+	}
+	
+	/**
+	 * tasksテーブルを論理削除するメソッド
+	 * @param task
+	 */
+	public void deleteTasks(Task task) {
+		taskRepository.deleteTasks(task);
 	}
 	
 	/**

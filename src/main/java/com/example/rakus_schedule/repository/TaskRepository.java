@@ -14,6 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.util.taskSqlUtil;
 
+/**
+ * tasksテーブルを直接操作するクラス
+ * 
+ * @author miyaharashuusaku
+ *
+ */
 @Repository
 public class TaskRepository {
 
@@ -36,8 +42,6 @@ public class TaskRepository {
 		task.setCreatorId(rs.getInt("creator_id"));
 		task.setEngineerId(rs.getInt("engineer_id"));
 		task.setProjectId(rs.getInt("project_id"));
-		task.setAnticipatedCommencementDate(rs
-				.getDate("anticipated_commencement_date"));
 		task.setUpdatedAt(rs.getTimestamp("updated_at"));
 		task.setAnticipatedCommencementDate(rs
 				.getDate("anticipated_commencement_date"));
@@ -57,7 +61,7 @@ public class TaskRepository {
 	 * 
 	 * @return 全てのタスクリスト
 	 */
-	public List<Task> findAll() {
+	public List<Task> findAllTasks() {
 		String allTaskSql = taskSqlUtil.getFindAllSql();
 		List<Task> allTaskList = jdbcTemplate
 				.query(allTaskSql, TASK_ROW_MAPPER);
@@ -69,7 +73,7 @@ public class TaskRepository {
 	 * 
 	 * @return アクティブな全てのタスクリスト
 	 */
-	public List<Task> getActivefindAll() {
+	public List<Task> getActivefindAllTasks() {
 		String allActiveTaskSql = taskSqlUtil.getActiveFindAllSql();
 		List<Task> allActiveTaskList = jdbcTemplate.query(allActiveTaskSql,
 				TASK_ROW_MAPPER);
@@ -84,17 +88,12 @@ public class TaskRepository {
 	 *            新規登録するタスク
 	 */
 	@Transactional
-	public void updateOrderNoForStandByAndInsertTask(Task task) {
-
-		String updateOrderNoForStandBySql = taskSqlUtil
-				.updateOrderNoForStandBySql();
+	public void updateOrderNoForStandByAndInsertTasks(Task task) {
 
 		// created_at,updated_at,completion_flg,deleted_flgはトリガー作ったら自動で登録出来るようにする。今は直書きで対応。
-		String insertTasksSql = taskSqlUtil.insertTasksSql();
-
 		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
-		jdbcTemplate.update(updateOrderNoForStandBySql, param);
-		jdbcTemplate.update(insertTasksSql, param);
+		jdbcTemplate.update(taskSqlUtil.getUpdateOrderNoForStandBySql(), param);
+		jdbcTemplate.update(taskSqlUtil.getInsertTasksSql(), param);
 	}
 
 	/**
@@ -108,7 +107,7 @@ public class TaskRepository {
 		for (Integer taskId : beforeOrderTask) {
 			SqlParameterSource param = new MapSqlParameterSource().addValue(
 					"taskId", taskId).addValue("orderNo", orderNo);
-			jdbcTemplate.update(taskSqlUtil.updateOrderTaskSql(), param);
+			jdbcTemplate.update(taskSqlUtil.getUpdateOrderTaskSql(), param);
 			orderNo++;
 		}
 	}
@@ -122,7 +121,7 @@ public class TaskRepository {
 	public void updateStatus(Integer taskId, Integer taskStatus) {
 		SqlParameterSource param = new MapSqlParameterSource().addValue(
 				"taskId", taskId).addValue("taskStatus", taskStatus);
-		jdbcTemplate.update(taskSqlUtil.updateStatus(), param);
+		jdbcTemplate.update(taskSqlUtil.getUpdateTaskStatusSql(), param);
 	}
 
 	/**
@@ -136,8 +135,45 @@ public class TaskRepository {
 		for (Integer taskId : afterOrderTask) {
 			SqlParameterSource param = new MapSqlParameterSource().addValue(
 					"taskId", taskId).addValue("orderNo", orderNo);
-			jdbcTemplate.update(taskSqlUtil.updateOrderTaskSql(), param);
+			jdbcTemplate.update(taskSqlUtil.getUpdateOrderTaskSql(), param);
 			orderNo++;
 		}
+	}
+
+	/**
+	 * tasksテーブルを更新するメソッド taskIdを条件に、受け取ったパラメーターを全て更新する
+	 * 
+	 * @param task
+	 */
+	public void editTasks(Task task) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
+
+		// SqlParameterSource param = new MapSqlParameterSource()
+		// .addValue("taskId", task.getTaskId())
+		// .addValue("taskName", task.getTaskName())
+		// .addValue("taskStatus", task.getTaskStatus())
+		// .addValue("orderNo", task.getOrderNo())
+		// .addValue("priority", task.getPriority())
+		// .addValue("progress", task.getProgress())
+		// .addValue("anticipatedCommencementDate",
+		// task.getAnticipatedCommencementDate())
+		// .addValue("expectedCompletionDate", task.getExpectedCompletionDate())
+		// .addValue("commecementDate", task.getCommecementDate())
+		// .addValue("finishDate", task.getFinishDate())
+		// .addValue("completionDate", task.getCommecementDate());
+
+		jdbcTemplate.update(taskSqlUtil.getUpdateTasksSql(), param);
+	}
+
+	/**
+	 * tasksテーブルを論理削除するメソッド
+	 * 
+	 * @param task
+	 */
+	public void deleteTasks(Task task) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
+		// SqlParameterSource param = new MapSqlParameterSource()
+		// .addValue("taskId", task.getTaskId());
+		jdbcTemplate.update(taskSqlUtil.getDeleteTasksSql(), param);
 	}
 }

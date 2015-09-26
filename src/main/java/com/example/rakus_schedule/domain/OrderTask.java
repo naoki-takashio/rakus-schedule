@@ -13,24 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderTask {
 
-	
-	/**
-	 * 移動するタスクのタスクID.
-	 */
+	/** 移動するタスクのタスクID. */
 	private Integer taskId;
 	
-	/**
-	 * 並び替え移動前のタスク順序.
-	 */
+	/** 並び替え移動前のタスク順序. */
 	private Integer[] beforeOrderTask;
 	
-	/**
-	 * 並び替え移動後のタスク順序.
-	 */
+	/** 並び替え移動後のタスク順序. */
 	private Integer[] afterOrderTask;
 	
-	/**
-	 * 移動後のステータス.
-	 */
+	/** 移動後のステータス. */
 	private Integer afterStatus;
 }

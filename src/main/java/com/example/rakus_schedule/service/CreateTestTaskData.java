@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.rakus_schedule.domain.Task;
+import com.example.rakus_schedule.domain.Comment;
 
 /**
  * テストデータ作成用クラス.
@@ -23,7 +24,7 @@ public class CreateTestTaskData {
 	
 	Date date = new Date(System.currentTimeMillis());
 	Timestamp time = new Timestamp(System.currentTimeMillis());
-	List<String> testList = new ArrayList<String>();
+	List<Comment> testList = new ArrayList<Comment>();
 	
 	Task testTask1 = new Task(1,"test1",0,"testtest",1,"高",0,"testtag",time,1,2,1,time,date,date,date,date,date,false,false,testList);
 	Task testTask2 = new Task(2,"test2",1,"testtest",1,"高",0,"testtag",time,1,2,1,time,date,date,date,date,date,false,false,testList);
