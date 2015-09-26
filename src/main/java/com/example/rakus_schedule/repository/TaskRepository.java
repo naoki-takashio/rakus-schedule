@@ -137,6 +137,7 @@ public class TaskRepository {
 			SqlParameterSource param = new MapSqlParameterSource().addValue(
 					"taskId", taskId).addValue("orderNo", orderNo);
 			jdbcTemplate.update(taskSqlUtil.updateOrderTaskSql(), param);
+			orderNo++;
 		}
 	}
 }
