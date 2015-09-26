@@ -16,32 +16,32 @@ public class taskSqlUtil {
 	 * @return 全てのデータを取得するsql
 	 */
 	public String getFindAllSql() {
-		StringBuilder allaskSql = new StringBuilder();
-		allaskSql.append("SELECT");
-		allaskSql.append("	task_id");
-		allaskSql.append("	,task_name");
-		allaskSql.append("	,task_status");
-		allaskSql.append("	,task_content");
-		allaskSql.append("	,order_no");
-		allaskSql.append("	,priority");
-		allaskSql.append("	,progress");
-		allaskSql.append("	,tag");
-		allaskSql.append("	,creator_id");
-		allaskSql.append("	,engineer_id");
-		allaskSql.append("	,project_id");
-		allaskSql.append("	,anticipated_commencement_date");
-		allaskSql.append("	,expected_completion_date");
-		allaskSql.append("	,commencement_date");
-		allaskSql.append("	,finish_date");
-		allaskSql.append("	,completion_date");
-		allaskSql.append("	,completion_flg");
-		allaskSql.append("	,created_at");
-		allaskSql.append("	,updated_at");
-		allaskSql.append("	,deleted_flg ");
-		allaskSql.append("FROM");
-		allaskSql.append("	tasks");
+		StringBuilder allTaskSql = new StringBuilder();
+		allTaskSql.append("SELECT");
+		allTaskSql.append("	task_id");
+		allTaskSql.append("	,task_name");
+		allTaskSql.append("	,task_status");
+		allTaskSql.append("	,task_content");
+		allTaskSql.append("	,order_no");
+		allTaskSql.append("	,priority");
+		allTaskSql.append("	,progress");
+		allTaskSql.append("	,tag");
+		allTaskSql.append("	,creator_id");
+		allTaskSql.append("	,engineer_id");
+		allTaskSql.append("	,project_id");
+		allTaskSql.append("	,anticipated_commencement_date");
+		allTaskSql.append("	,expected_completion_date");
+		allTaskSql.append("	,commencement_date");
+		allTaskSql.append("	,finish_date");
+		allTaskSql.append("	,completion_date");
+		allTaskSql.append("	,completion_flg");
+		allTaskSql.append("	,created_at");
+		allTaskSql.append("	,updated_at");
+		allTaskSql.append("	,deleted_flg ");
+		allTaskSql.append("FROM");
+		allTaskSql.append("	tasks");
 
-		return allaskSql.toString();
+		return allTaskSql.toString();
 	}
 
 	/**
@@ -176,7 +176,6 @@ public class taskSqlUtil {
 		insertTasks.append("	,false");
 		insertTasks.append("	,false);");
 		return insertTasks.toString();
-
 	}
 }
 
