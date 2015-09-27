@@ -48,8 +48,13 @@ public class TaskController {
 		return new CommentForm();
 	}
 	
+	@ModelAttribute
+	public OrderTaskForm setUpOrderTaskForm() {
+		return new OrderTaskForm();
+	}
+	
 	/**
-	 * 最初に画面を開く際、アクティブなタスク情報を表示
+	 * 最初に画面を開く際、アクティブなタスク情報を表示.
 	 * 
 	 * @param model
 	 * @return
@@ -95,7 +100,7 @@ public class TaskController {
 	}
 	
 	 /**
-	 * タスクステータスを更新する。
+	 * タスクステータスを更新する.
 	 * @param model
 	 * @return トップ画面
 	 */
@@ -116,7 +121,7 @@ public class TaskController {
 	
 	/**
 	 * タスクを削除する（tasksテーブルから論理削除する）
-	 * 後々、削除したタスク一覧を見えるようにする。
+	 * 後々、削除したタスク一覧を見えるようにする.
 	 * @param model
 	 * @return トップ画面
 	 */

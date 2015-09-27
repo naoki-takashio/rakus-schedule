@@ -3,7 +3,7 @@ package com.example.rakus_schedule.util;
 import org.springframework.stereotype.Component;
 
 /**
- * tasksテーブルに関するsql文を保管するクラス
+ * tasksテーブルに関するsql文を保管するクラス.
  * 
  * @author miyaharashuusaku
  *
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class taskSqlUtil {
 
 	/**
-	 * 全てのデータを取得するsqlを返すメソッド。
+	 * 全てのデータを取得するsqlを返すメソッド.
 	 * 
 	 * @return 全てのデータを取得するsql
 	 */
@@ -46,7 +46,7 @@ public class taskSqlUtil {
 	}
 
 	/**
-	 * 全てのデータを取得するsqlを返すメソッド。
+	 * 全てのデータを取得するsqlを返すメソッド.
 	 * 
 	 * @return 全てのデータを取得するsql
 	 */
@@ -84,7 +84,7 @@ public class taskSqlUtil {
 	}
 
 	/**
-	 * tasksテーブルを更新するsqlを返すメソッド
+	 * tasksテーブルを更新するsqlを返すメソッド.
 	 * 
 	 * @return tasksテーブルを更新するsql
 	 */
@@ -115,7 +115,7 @@ public class taskSqlUtil {
 	}
 
 	/**
-	 * 削除フラグを更新(論理削除)するsql文を取得するメソッド
+	 * 削除フラグを更新(論理削除)するsql文を取得するメソッド.
 	 * 
 	 * @return 削除フラグを更新(論理削除)するsql文
 	 */

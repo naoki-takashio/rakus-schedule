@@ -15,7 +15,7 @@ import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.util.taskSqlUtil;
 
 /**
- * tasksテーブルを直接操作するクラス
+ * tasksテーブルを直接操作するクラス.
  * 
  * @author miyaharashuusaku
  *
@@ -57,7 +57,7 @@ public class TaskRepository {
 	};
 
 	/**
-	 * 全てのタスク情報をtasksテーブルから取得するメソッド
+	 * 全てのタスク情報をtasksテーブルから取得するメソッド.
 	 * 
 	 * @return 全てのタスクリスト
 	 */
@@ -69,7 +69,7 @@ public class TaskRepository {
 	}
 
 	/**
-	 * アクティブなタスク情報をtasksテーブルから取得するメソッド
+	 * アクティブなタスク情報をtasksテーブルから取得するメソッド.
 	 * 
 	 * @return アクティブな全てのタスクリスト
 	 */
@@ -141,7 +141,7 @@ public class TaskRepository {
 	}
 
 	/**
-	 * tasksテーブルを更新するメソッド taskIdを条件に、受け取ったパラメーターを全て更新する
+	 * tasksテーブルを更新するメソッド taskIdを条件に、受け取ったパラメーターを全て更新する.
 	 * 
 	 * @param task
 	 */
@@ -151,7 +151,7 @@ public class TaskRepository {
 	}
 
 	/**
-	 * tasksテーブルを論理削除するメソッド
+	 * tasksテーブルを論理削除するメソッド.
 	 * 
 	 * @param task
 	 */
