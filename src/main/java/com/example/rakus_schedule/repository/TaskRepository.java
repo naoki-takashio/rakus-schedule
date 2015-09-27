@@ -147,21 +147,6 @@ public class TaskRepository {
 	 */
 	public void editTasks(Task task) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
-
-		// SqlParameterSource param = new MapSqlParameterSource()
-		// .addValue("taskId", task.getTaskId())
-		// .addValue("taskName", task.getTaskName())
-		// .addValue("taskStatus", task.getTaskStatus())
-		// .addValue("orderNo", task.getOrderNo())
-		// .addValue("priority", task.getPriority())
-		// .addValue("progress", task.getProgress())
-		// .addValue("anticipatedCommencementDate",
-		// task.getAnticipatedCommencementDate())
-		// .addValue("expectedCompletionDate", task.getExpectedCompletionDate())
-		// .addValue("commecementDate", task.getCommecementDate())
-		// .addValue("finishDate", task.getFinishDate())
-		// .addValue("completionDate", task.getCommecementDate());
-
 		jdbcTemplate.update(taskSqlUtil.getUpdateTasksSql(), param);
 	}
 
@@ -172,8 +157,6 @@ public class TaskRepository {
 	 */
 	public void deleteTasks(Task task) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
-		// SqlParameterSource param = new MapSqlParameterSource()
-		// .addValue("taskId", task.getTaskId());
 		jdbcTemplate.update(taskSqlUtil.getDeleteTasksSql(), param);
 	}
 }

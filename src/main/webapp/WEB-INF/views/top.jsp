@@ -39,6 +39,7 @@
 	<div id="dialogTaskCreate" title="+Task Add"></div>
 	<div id="dialogTaskEdit" title="+Task Edit"></div>
 	<div id="dialogTaskDisp" title="+Task Disp"></div>
+	<div id="dialogTaskStatusChange" title="+Task Comment"></div>
 	
 	
 	
@@ -127,24 +128,32 @@ function viewTaskDisp(taskId){
 	return false;
 
 }
+//並び替えコメントダイアログ表示
+function viewTaskStatusChange(taskId){
+ 	var objContent = getTaskStatusChange(taskId);
+	$('#dialogTaskStatusChange').html(objContent);
+	$('#dialogTaskStatusChange').dialog('open');
+	return false;
+}
 </script>
 <script>
-    $('.listStatus').sortable({
-    	connectWith:'.listStatus',
-   		cursor:'move',
-   		update:function(evt, ui) {
-			if (this === ui.item.parent()[0]) {
-				var data = {
-					beforeOrderTask : $(ui.sender).attr('id')?$(ui.sender).sortable('toArray'):'',
-					afterOrderTask : $(this).sortable('toArray'),
-					afterStatus : $(evt.target).attr('id').replace('status', ''),
-					taskId : $(ui.item).attr('id')
-				};
-				taskOrderupdate(data);
-			}
-   		}
-    });
-    $('.listStatus').disableSelection();
+//並び替え
+$('.listStatus').sortable({
+	connectWith:'.listStatus',
+	cursor:'move',
+	update:function(evt, ui) {
+		if (this === ui.item.parent()[0]) {
+			var data = {};
+			data.beforeOrderTask = $(ui.sender).attr('id')?$(ui.sender).sortable('toArray'):'';
+			data.afterOrderTask = $(this).sortable('toArray');
+			data.afterStatus = $(evt.target).attr('id').replace('status', '');
+			data.taskId = $(ui.item).attr('id');
+			taskOrderupdate(data);
+//			viewTaskStatusChange(eval('obj' + data.taskId));
+		}
+	}
+});
+$('.listStatus').disableSelection();
 </script>
 <script>
 //タスク作成
@@ -177,6 +186,20 @@ function taskEdit(){
 function taskOrderupdate(data){
 	$.ajax({
     	url: "/kanban/orderupdate",
+    	type: "POST",
+    	dataType: 'json',
+    	data: data
+	}).done(function(data){
+		window.location.href = '/kanban';
+	}).fail(function(data){
+    	alert('error!');
+	})
+}
+//タスク並び替えコメント追加
+function taskStatusChange(data){
+	var form = ($('#formTaskStatusChange').serialize()).replace('%0D%0A', '<br>');
+	$.ajax({
+    	url: "/kanban/taskStatusChange",
     	type: "POST",
     	data: data
 	}).done(function(data){
