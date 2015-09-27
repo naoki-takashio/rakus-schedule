@@ -15,7 +15,7 @@ import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.util.taskSqlUtil;
 
 /**
- * tasksテーブルを直接操作するクラス
+ * tasksテーブルを直接操作するクラス.
  * 
  * @author miyaharashuusaku
  *
@@ -57,7 +57,7 @@ public class TaskRepository {
 	};
 
 	/**
-	 * 全てのタスク情報をtasksテーブルから取得するメソッド
+	 * 全てのタスク情報をtasksテーブルから取得するメソッド.
 	 * 
 	 * @return 全てのタスクリスト
 	 */
@@ -69,7 +69,7 @@ public class TaskRepository {
 	}
 
 	/**
-	 * アクティブなタスク情報をtasksテーブルから取得するメソッド
+	 * アクティブなタスク情報をtasksテーブルから取得するメソッド.
 	 * 
 	 * @return アクティブな全てのタスクリスト
 	 */
@@ -141,39 +141,22 @@ public class TaskRepository {
 	}
 
 	/**
-	 * tasksテーブルを更新するメソッド taskIdを条件に、受け取ったパラメーターを全て更新する
+	 * tasksテーブルを更新するメソッド taskIdを条件に、受け取ったパラメーターを全て更新する.
 	 * 
 	 * @param task
 	 */
 	public void editTasks(Task task) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
-
-		// SqlParameterSource param = new MapSqlParameterSource()
-		// .addValue("taskId", task.getTaskId())
-		// .addValue("taskName", task.getTaskName())
-		// .addValue("taskStatus", task.getTaskStatus())
-		// .addValue("orderNo", task.getOrderNo())
-		// .addValue("priority", task.getPriority())
-		// .addValue("progress", task.getProgress())
-		// .addValue("anticipatedCommencementDate",
-		// task.getAnticipatedCommencementDate())
-		// .addValue("expectedCompletionDate", task.getExpectedCompletionDate())
-		// .addValue("commecementDate", task.getCommecementDate())
-		// .addValue("finishDate", task.getFinishDate())
-		// .addValue("completionDate", task.getCommecementDate());
-
 		jdbcTemplate.update(taskSqlUtil.getUpdateTasksSql(), param);
 	}
 
 	/**
-	 * tasksテーブルを論理削除するメソッド
+	 * tasksテーブルを論理削除するメソッド.
 	 * 
 	 * @param task
 	 */
 	public void deleteTasks(Task task) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(task);
-		// SqlParameterSource param = new MapSqlParameterSource()
-		// .addValue("taskId", task.getTaskId());
 		jdbcTemplate.update(taskSqlUtil.getDeleteTasksSql(), param);
 	}
 }

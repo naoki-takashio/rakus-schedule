@@ -12,7 +12,7 @@ import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.repository.TaskRepository;
 
 /**
- * Tasksテーブルに関するサービスクラス
+ * Tasksテーブルに関するサービスクラス.
  * @author miyaharashuusaku
  *
  */
@@ -30,9 +30,9 @@ public class TaskService {
 
 	/**
 	 * TaskRepositoryクラスのfindAllメソッドを利用し、全てのタスク情報を取得するメソッド
-	 * 取得したタスクリストをtaskstatusの値で切り分け、リスト化する。
+	 * <br>取得したタスクリストをtaskstatusの値で切り分け、リスト化する.
 	 * 
-	 * @return taskObject:タスクステータス毎に切り分けた、リスト群。
+	 * @return taskObject:タスクステータス毎に切り分けた、リスト群
 	 */
 	public List<Object> kanbanView() {
 		/* 変数宣言 */
@@ -96,7 +96,7 @@ public class TaskService {
 	}
 	
 	/**
-	 * tasksテーブルを更新するメソッド
+	 * tasksテーブルを更新するメソッド.
 	 * @param task
 	 */
 	public void editTasks(Task task) {
@@ -104,7 +104,7 @@ public class TaskService {
 	}
 	
 	/**
-	 * tasksテーブルを論理削除するメソッド
+	 * tasksテーブルを論理削除するメソッド.
 	 * @param task
 	 */
 	public void deleteTasks(Task task) {

@@ -12,13 +12,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.rakus_schedule.domain.OrderTask;
 import com.example.rakus_schedule.domain.Comment;
+import com.example.rakus_schedule.domain.OrderTask;
 import com.example.rakus_schedule.domain.Task;
 import com.example.rakus_schedule.service.CommentService;
-//import com.example.rakus_schedule.service.CreateTestTaskData;
+import com.example.rakus_schedule.service.CreateTestTaskData;
 import com.example.rakus_schedule.service.TaskService;
 
 /**
@@ -32,31 +31,31 @@ public class TaskController {
 
 	@Autowired
 	private TaskService taskService;
-
-	// @Autowired
-	// private CreateTestTaskData createTestTaskData;
 	
 	@Autowired
 	private CommentService commentService;
 	
+	@Autowired
+	private CreateTestTaskData createTestTaskData;
 
 	@ModelAttribute
 	public TaskForm setUpTaskForm() {
 		return new TaskForm();
 	}
-
-	@ModelAttribute
-	public OrderTaskForm setupform() {
-		return new OrderTaskForm();
-	}
-
+	
 	@ModelAttribute
 	public CommentForm setUpCommentForm() {
 		return new CommentForm();
 	}
 	
+	@ModelAttribute
+	public OrderTaskForm setUpOrderTaskForm() {
+		return new OrderTaskForm();
+	}
+	
 	/**
 	 * 最初に画面を開く際、アクティブなタスク情報を表示.
+	 * 
 	 * @param model
 	 * @return
 	 */
@@ -70,8 +69,12 @@ public class TaskController {
 	}
 
 	/**
-	 * 新規タスクをDBに登録する. タイトルと開始日に対するvalidateがあり formクラスで、validateは行う.
-	 * @param form 入力パラメーター
+	 * 新規タスクをDBに登録する。 タイトルと開始日に対するvalidateがあり formクラスで、validateは行う
+	 * 
+	 * @param form
+	 *            入力パラメーター
+	 * @param result
+	 *            入力値チェック
 	 * @return model 一覧表示画面
 	 */
 	@RequestMapping(value = "create")
@@ -97,12 +100,12 @@ public class TaskController {
 	}
 	
 	 /**
-	 * タスクステータスを更新する。
+	 * タスクステータスを更新する.
 	 * @param model
 	 * @return トップ画面
 	 */
 	@Transactional
-	@RequestMapping(value = "edit", method = RequestMethod.POST)
+	@RequestMapping(value = "edit")
 	public String editTasks(@Validated TaskForm taskForm, CommentForm commentForm, 
 						Model model) {
 		Task task = new Task();
@@ -111,8 +114,8 @@ public class TaskController {
 		BeanUtils.copyProperties(commentForm, comment);
 		/* tasksテーブルを更新する */
 		taskService.editTasks(task);
-		/* commentsテーブルに登録する */
-		commentService.commentsInsert(comment);
+//		/* commentsテーブルに登録する */
+//		commentService.commentsInsert(comment);
 		return top(model);
 	 }
 	
@@ -122,7 +125,7 @@ public class TaskController {
 	 * @param model
 	 * @return トップ画面
 	 */
-	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@RequestMapping(value = "delete")
 	public String deleteTasks(TaskForm taskForm, Model model) {
 		Task task = new Task();
 		BeanUtils.copyProperties(taskForm, task);
