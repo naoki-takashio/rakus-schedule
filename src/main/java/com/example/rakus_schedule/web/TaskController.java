@@ -90,8 +90,8 @@ public class TaskController {
 	 * @param form 入力パラメータ
 	 * @param model 一覧画面表示
 	 */
-	@RequestMapping(value = "orderupdate", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public String orderupdate(@Validated @RequestBody OrderTaskForm form, Model model) {
+	@RequestMapping(value = "orderupdate")
+	public String orderupdate(@Validated OrderTaskForm form, Model model) {
 		OrderTask orderTask = new OrderTask();
 		BeanUtils.copyProperties(form, orderTask);
 		//並べ替えを行う
